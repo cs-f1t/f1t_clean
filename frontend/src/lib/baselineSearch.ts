@@ -93,8 +93,16 @@ function normalizeLocalApiBaseUrl(apiBaseUrl?: string) {
     return undefined
   }
 
+  const hasScheme = /^[a-z][a-z\d+\-.]*:\/\//i.test(trimmedApiBaseUrl)
+  const withScheme = hasScheme
+    ? trimmedApiBaseUrl
+    : trimmedApiBaseUrl.startsWith('localhost') || trimmedApiBaseUrl.startsWith('127.0.0.1')
+      ? `http://${trimmedApiBaseUrl}`
+      : `https://${trimmedApiBaseUrl}`
+  const baseUrl = withScheme.replace(/\/health\/?$/, '')
+
   try {
-    const url = new URL(trimmedApiBaseUrl)
+    const url = new URL(baseUrl)
 
     if (url.hostname === 'localhost') {
       url.hostname = '127.0.0.1'
@@ -102,7 +110,7 @@ function normalizeLocalApiBaseUrl(apiBaseUrl?: string) {
 
     return url.toString().replace(/\/$/, '')
   } catch {
-    return trimmedApiBaseUrl.replace(/\/$/, '')
+    return baseUrl.replace(/\/$/, '')
   }
 }
 
