@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intent Analysis Results</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; color: #1a1a1a; }
+
+  header {
+    background: #1a1a2e;
+    color: white;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  header h1 { font-size: 1.3rem; font-weight: 600; }
+  header span { font-size: 0.85rem; opacity: 0.6; }
+
+  .tabs {
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    padding: 0 24px;
+    gap: 4px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .tab {
+    padding: 14px 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: #333; }
+  .tab.active { color: #4f46e5; border-bottom-color: #4f46e5; }
+  .tab .count {
+    background: #f0f0f0;
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    margin-left: 6px;
+  }
+  .tab.active .count { background: #ede9fe; color: #4f46e5; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 20px;
+    padding: 24px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+
+  .card-header {
+    padding: 14px 16px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .type-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .type-A { background: #dbeafe; color: #1d4ed8; }
+  .type-B { background: #dcfce7; color: #166534; }
+  .type-C { background: #fef3c7; color: #92400e; }
+
+  .card-id { font-size: 0.8rem; color: #999; font-family: monospace; }
+
+  .card-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    background: #f5f5f5;
+  }
+  .no-image {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
+    color: #bbb;
+    font-size: 0.8rem;
+  }
+
+  .card-body { padding: 14px 16px 16px; }
+
+  .query-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #333;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .attrs-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 8px;
+  }
+
+  .attrs-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .attr-chip {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #f5f5f5;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+  }
+  .attr-key { color: #888; font-weight: 500; }
+  .attr-val { color: #1a1a1a; font-weight: 600; }
+
+  .reasoning-toggle {
+    font-size: 0.78rem;
+    color: #4f46e5;
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+  }
+  .reasoning-toggle:hover { text-decoration: underline; }
+
+  .reasoning-text {
+    display: none;
+    font-size: 0.78rem;
+    color: #555;
+    line-height: 1.6;
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: #f8f8ff;
+    border-radius: 6px;
+    border-left: 3px solid #c7d2fe;
+  }
+  .reasoning-text.open { display: block; }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Intent Analysis Results</h1>
+  <span>Qwen3-VL-32B · simple_test + image_test</span>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="filterType('all')">전체 <span class="count" id="cnt-all"></span></div>
+  <div class="tab" onclick="filterType('A')">Type A — 이미지only <span class="count" id="cnt-A"></span></div>
+  <div class="tab" onclick="filterType('B')">Type B — 텍스트only <span class="count" id="cnt-B"></span></div>
+  <div class="tab" onclick="filterType('C')">Type C — 이미지+메타 <span class="count" id="cnt-C"></span></div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const SIMPLE_RESULTS = __SIMPLE__;
+const IMAGE_RESULTS  = __IMAGE__;
+
+function getType(id) {
+  if (id.endsWith('_A')) return 'A';
+  if (id.endsWith('_C')) return 'C';
+  return 'B';
+}
+
+function toRelativeImagePath(absPath) {
+  if (!absPath) return null;
+  if (absPath.startsWith('data:')) return absPath;
+  const match = absPath.match(/ref_images\/(.+)/);
+  return match ? 'ref_images/' + match[1] : null;
+}
+
+function renderCard(item) {
+  const type = getType(item.id);
+  const attrs = item.inferred_attributes || {};
+  const reasoning = attrs.reasoning || null;
+  const imgPath = toRelativeImagePath(item.image_path);
+
+  const attrChips = Object.entries(attrs)
+    .filter(([k]) => k !== 'reasoning')
+    .map(([k, v]) => `
+      <div class="attr-chip">
+        <span class="attr-key">${k}</span>
+        <span class="attr-val">${v}</span>
+      </div>`).join('');
+
+  const imgHtml = imgPath
+    ? `<img class="card-image" src="${imgPath}" alt="${item.id}" loading="lazy">`
+    : `<div class="no-image">이미지 없음</div>`;
+
+  const reasoningHtml = reasoning ? `
+    <div class="reasoning-toggle" onclick="toggleReasoning(this)">▸ reasoning 보기</div>
+    <div class="reasoning-text">${reasoning}</div>
+  ` : '';
+
+  const div = document.createElement('div');
+  div.className = 'card';
+  div.dataset.type = type;
+  div.innerHTML = `
+    <div class="card-header">
+      <span class="type-badge type-${type}">Type ${type}</span>
+      <span class="card-id">${item.id}</span>
+    </div>
+    ${imgHtml}
+    <div class="card-body">
+      <div class="query-text">${item.query}</div>
+      <div class="attrs-label">추론된 속성</div>
+      <div class="attrs-grid">${attrChips || '<span style="color:#bbb;font-size:0.8rem">속성 없음</span>'}</div>
+      ${reasoningHtml}
+    </div>
+  `;
+  return div;
+}
+
+function toggleReasoning(el) {
+  const box = el.nextElementSibling;
+  box.classList.toggle('open');
+  el.textContent = box.classList.contains('open') ? '▾ reasoning 닫기' : '▸ reasoning 보기';
+}
+
+function filterType(type) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.querySelectorAll('.card').forEach(card => {
+    card.classList.toggle('hidden', type !== 'all' && card.dataset.type !== type);
+  });
+}
+
+// Build
+const all = [
+  ...SIMPLE_RESULTS.map(r => ({ ...r, _src: 'simple' })),
+  ...IMAGE_RESULTS.map(r => ({ ...r, _src: 'image' }))
+];
+
+const grid = document.getElementById('grid');
+const counts = { A: 0, B: 0, C: 0 };
+
+all.forEach(item => {
+  const card = renderCard(item);
+  grid.appendChild(card);
+  counts[getType(item.id)]++;
+});
+
+document.getElementById('cnt-all').textContent = all.length;
+document.getElementById('cnt-A').textContent = counts.A;
+document.getElementById('cnt-B').textContent = counts.B;
+document.getElementById('cnt-C').textContent = counts.C;
+</script>
+
+</body>
+</html>

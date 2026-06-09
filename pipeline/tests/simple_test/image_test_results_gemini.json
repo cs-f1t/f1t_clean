@@ -1,0 +1,231 @@
+[
+    {
+        "id": "2505951_C",
+        "query": "이 티셔츠랑 색이 비슷하며, 신축성이 있는 맨투맨 골라줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2505951.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "color": "grey",
+            "stretch": "yes",
+            "reasoning": "사용자가 '맨투맨'을 찾고 있어 category1을 'top'으로 지정하였고, '이 티셔츠랑 색이 비슷하며'라는 요청에 따라 이미지에서 확인되는 티셔츠의 색상인 'grey'(회색/차콜 계열)를 추출하였습니다. 또한 '신축성이 있는'이라는 표현을 통해 stretch 속성을 'yes'로 설정하였습니다."
+        }
+    },
+    {
+        "id": "2505951_A",
+        "query": "이 티셔츠와 기장이 비슷한 상의 찾아줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2505951.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "error": "JSON parse failed",
+            "raw_output": "```json\n{\n  \"category1\": \"top\",\n  \"reasoning\": \"사용자가 '티셔츠', '상의'를 언급하여 카테고리를 'top'"
+        }
+    },
+    {
+        "id": "2080479_C",
+        "query": "이 맨투맨이랑 기장이 비슷하며, 여름에 입을 상의 골라줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2080479.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "season": "summer",
+            "reasoning": "사용자가 '상의'를 찾고 있으므로 category1을 'top'으로 설정하였고, '여름에 입을' 제품을 원하므로 season을 'summer'로 설정하였습니다. 이미지 속 맨투맨과 비슷한 기장을 언급하였으나, 상의 카테고리에는 스키마 규정상 기장(length) 속성을 적용하지 않으므로 제외하였습니다."
+        }
+    },
+    {
+        "id": "2080479_A",
+        "query": "이 맨투맨과 색이 비슷한 티셔츠 찾아줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2080479.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "color": "그레이",
+            "reasoning": "사용자가 '티셔츠'를 언급하여 상의 카테고리(top)를 지정하였고, 이미지 속 맨투맨과 '색이 비슷한' 제품을 요청하여 이미지에서 보이는 '그레이(멜란지 그레이)' 색상을 추출하였습니다."
+        }
+    },
+    {
+        "id": "2768893_C",
+        "query": "이 바지랑 기장은 비슷한데, 두께가 얇은 바지 추천해줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2768893.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "length": "long",
+            "thickness": "thin",
+            "reasoning": "사용자가 '이 바지', '바지'라고 언급하여 카테고리를 'pants'로 지정했으며, '이 바지랑 기장은 비슷한데'라는 요청과 이미지의 긴 기장을 바탕으로 'length'를 'long'으로 지정했습니다. 또한 '두께가 얇은' 바지를 원한다고 명시하여 'thickness'를 'thin'으로 설정했습니다."
+        }
+    },
+    {
+        "id": "2768893_A",
+        "query": "이 바지랑 색이 비슷한 바지 찾아줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2768893.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "color": "그린",
+            "reasoning": "사용자가 '이 바지'라며 바지(pants) 카테고리를 언급하였고, '색이 비슷한' 제품을 검색하여 이미지에서 확인되는 '그린' 색상을 추출하였습니다."
+        }
+    },
+    {
+        "id": "3276663_C",
+        "query": "이 바지랑 색은 비슷한데, 핏이 보통인 슬랙스 추천해줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/3276663.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "fit": "regular",
+            "color": "black",
+            "reasoning": "사용자가 언급한 '슬랙스'를 통해 category1을 'pants'로 지정하였고, '핏이 보통인'이라는 요청을 반영하여 fit을 'regular'로 설정하였습니다. 또한, 이미지 속 바지의 색상과 비슷해야 한다는 요청('이 바지랑 색은 비슷한데')에 따라 이미지의 어두운 데님 색상을 반영하여 color를 'black'으로 설정하였습니다."
+        }
+    },
+    {
+        "id": "3276663_A",
+        "query": "이 바지보다 기장은 짧은 바지 찾아줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/3276663.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "length": "short",
+            "reasoning": "사용자가 '바지'를 명시하여 category1을 'pants'로 설정하였으며, 이미지의 5부 기장(half) 바지보다 '기장은 짧은' 바지를 요청하여 length를 'short'로 설정하였습니다."
+        }
+    },
+    {
+        "id": "1202891_C",
+        "query": "이 치마랑 기장은 비슷한데, 신축성이 있는 치마 골라줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/1202891.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "long",
+            "stretch": "yes",
+            "reasoning": "사용자가 '치마'를 언급하여 category1을 'skirt'로 지정하였고, 이미지 속 치마와 비슷한 기장(롱/미디 기장)을 원하여 'length'를 'long'으로, '신축성이 있는' 제품을 요구하여 'stretch'를 'yes'로 설정하였습니다."
+        }
+    },
+    {
+        "id": "1202891_A",
+        "query": "이 치마랑 색이 비슷한 치마 찾아줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/1202891.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "color": "black, white, yellow, red",
+            "reasoning": "사용자가 '이 치마'라고 언급하여 카테고리를 'skirt'로 지정하였고, '색이 비슷한' 치마를 찾고 있으므로 이미지에서 확인되는 주요 색상인 'black, white, yellow, red'를 추출하였습니다."
+        }
+    },
+    {
+        "id": "2948636_C",
+        "query": "이 치마랑 기장은 비슷한데, 얇은 치마 골라줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2948636.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "long",
+            "thickness": "thin",
+            "reasoning": "사용자가 '치마'를 언급하여 category1을 'skirt'로 지정하였고, 이미지 속 치마와 비슷한 기장을 요구하여 이미지의 롱 기장을 반영해 length를 'long'으로 설정하였습니다. 또한 '얇은' 치마를 골라달라고 명시하여 thickness를 'thin'으로 설정하였습니다."
+        }
+    },
+    {
+        "id": "2948636_A",
+        "query": "이 치마보다 기장이 긴 치마 찾아줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2948636.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "long",
+            "reasoning": "사용자가 '치마'를 명시하여 category1을 'skirt'로 설정하였으며, 이미지 속 미디 기장의 치마보다 '기장이 긴' 치마를 요구하였으므로 length를 'long'으로 설정하였습니다."
+        }
+    },
+    {
+        "id": "1349530_C",
+        "query": "이 치마랑 색은 비슷한데, 와이드 핏의 치마 골라줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/1349530.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "fit": "loose",
+            "color": "레드, 그린, 옐로우",
+            "visual_detail": "체크 패턴",
+            "reasoning": "사용자가 '치마'를 명시하여 category1을 'skirt'로 지정하였고, '와이드 핏'을 요청하여 fit을 'loose'로 설정하였습니다. 또한, '이 치마랑 색은 비슷한데'라는 요청에 따라 이미지 속 치마의 주요 색상인 '레드, 그린, 옐로우'와 특징적인 '체크 패턴'을 각각 color와 visual_detail로 추출하였습니다."
+        }
+    },
+    {
+        "id": "1349530_A",
+        "query": "이 치마랑 비슷한 기장의 치마 찾아줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/1349530.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "long",
+            "reasoning": "사용자가 '치마'를 언급하여 카테고리를 'skirt'로 지정하였고, '비슷한 기장'을 요청하여 이미지 속 치마의 기장(무릎 아래로 내려오는 미디 기장)을 바탕으로 'length'를 'long'으로 설정하였습니다."
+        }
+    },
+    {
+        "id": "1350308_C",
+        "query": "이 원피스랑 기장은 비슷한데, 겨울에 입을 원피스 골라줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/1350308.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "length": "half",
+            "season": "winter",
+            "reasoning": "사용자가 '원피스'를 언급하여 category1을 'dress'로 설정하였고, 이미지 속 원피스의 기장이 무릎 부근까지 오는 미디(무릎) 기장이므로 length를 'half'로 설정하였습니다. 또한 '겨울에 입을'이라고 명시하여 season을 'winter'로 지정하였습니다."
+        }
+    },
+    {
+        "id": "1350308_A",
+        "query": "이 원피스랑 색이 비슷한 원피스 찾아줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/1350308.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "color": "퍼플, 옐로우, 블랙 멀티컬러",
+            "reasoning": "사용자가 '원피스'를 언급하여 카테고리를 'dress'로 설정하였고, '색이 비슷한' 원피스를 찾아달라고 요청하여 이미지 속 원피스의 주요 색상인 퍼플, 옐로우, 블랙 멀티컬러를 추출하였습니다."
+        }
+    },
+    {
+        "id": "3639514_C",
+        "query": "이 원피스랑 색은 비슷한데, 두꺼운 원피스 골라줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/3639514.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "color": "아이보리",
+            "thickness": "thick",
+            "reasoning": "사용자가 '원피스'를 언급하여 category1을 'dress'로 지정하였고, '색은 비슷한데'라며 이미지의 색상을 참조하여 color를 '아이보리'로 설정하였으며, '두꺼운' 원피스를 원한다고 명시하여 thickness를 'thick'으로 설정하였습니다."
+        }
+    },
+    {
+        "id": "3639514_A",
+        "query": "이 원피스보다 기장이 짧은 원피스 찾아줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/3639514.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "length": "short",
+            "reasoning": "사용자가 '원피스'를 명시하여 category1을 'dress'로 지정하였고, '기장이 짧은' 원피스를 원한다고 명시하여 length를 'short'로 지정하였습니다."
+        }
+    },
+    {
+        "id": "3602675_C",
+        "query": "이 원피스랑 기장은 비슷한데, 밝은 색 원피스 골라줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/3602675.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "length": "long",
+            "color": "밝은색",
+            "reasoning": "사용자가 '원피스'를 언급하여 category1을 'dress'로 설정하였고, '이 원피스랑 기장은 비슷한데'라는 요청에 따라 이미지 속 원피스의 기장인 롱 기장을 반영하여 length를 'long'으로 설정하였습니다. 또한 '밝은 색'을 원한다고 명시하여 color를 '밝은색'으로 설정하였습니다."
+        }
+    },
+    {
+        "id": "3602675_A",
+        "query": "이 원피스랑 기장이 비슷한 원피스 찾아줘.",
+        "image_path": "/gpfs/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/3602675.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "length": "long",
+            "reasoning": "사용자가 '원피스'를 언급하여 category1을 'dress'로 지정하였으며, '기장이 비슷한' 원피스를 찾아달라고 요청하여 첨부된 이미지 속 원피스의 기장인 'long'(롱/미디 기장)을 추출하여 반영하였습니다."
+        }
+    }
+]

@@ -1,0 +1,13 @@
+-r requirements.txt
+
+# Local CLIP inference (replaces HF API for offline index building)
+torchvision>=0.20,<1.0
+open_clip_torch>=2.24,<3.0
+
+# Local Qwen VLM
+transformers>=4.57.3,<5.0
+huggingface-hub>=0.34.0,<1.0
+accelerate>=1.12.0
+qwen-vl-utils>=0.0.14
+supabase>=2.0
+google-genai>=1.0

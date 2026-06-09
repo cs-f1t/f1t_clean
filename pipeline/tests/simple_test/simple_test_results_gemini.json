@@ -1,0 +1,121 @@
+[
+    {
+        "id": "q01",
+        "query": "티셔츠이면서, 노란색이며 얇은 옷 추천해줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "color": "노란색",
+            "thickness": "thin",
+            "reasoning": "사용자가 '티셔츠'를 직접 언급하여 카테고리를 'top'으로 지정하였고, '노란색'을 명시하여 색상을 '노란색'으로 추출하였으며, '얇은 옷'이라고 명시하여 두께를 'thin'으로 추출하였습니다. 소매 길이, 성별 등 언급되지 않은 다른 속성들은 제외하였습니다."
+        }
+    },
+    {
+        "id": "q02",
+        "query": "셔츠면서, 밝은색이며 신축성이 있는 옷 골라줘.",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "color": "밝은색",
+            "stretch": "yes",
+            "reasoning": "사용자가 '셔츠면서'라고 언급하여 상의(top) 카테고리를 지정하였고, '밝은색이며'라고 명시하여 색상(color)을 '밝은색'으로 설정하였으며, '신축성이 있는'이라고 명시하여 신축성(stretch)을 'yes'로 지정하였습니다."
+        }
+    },
+    {
+        "id": "q03",
+        "query": "후드면서, 와이드 핏에 소매가 긴 옷 골라줘.",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "sleeve": "long",
+            "fit": "loose",
+            "visual_detail": "후드",
+            "reasoning": "사용자가 '후드면서'라고 언급하여 상의 카테고리(category1: top)와 디자인 디테일(visual_detail: 후드)을 추출하였고, '소매가 긴'에서 소매 기장(sleeve: long), '와이드 핏'에서 핏(fit: loose)을 추출하였습니다."
+        }
+    },
+    {
+        "id": "q04",
+        "query": "바지인데, 반바지이고 여름에 입을 옷 골라줘.",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "length": "half",
+            "season": "summer",
+            "reasoning": "사용자가 '바지'라고 명시하여 category1을 'pants'로 분류하였고, '반바지'라고 구체적인 길이를 언급하여 length를 'half'로 설정하였으며, '여름에 입을 옷'이라고 계절을 명시하여 season을 'summer'로 설정하였습니다."
+        }
+    },
+    {
+        "id": "q05",
+        "query": "슬렉스인데, 딱 달라붙으면서, 색이며 신축성이 없는 바지 찾아줘.",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "error": "JSON parse failed",
+            "raw_output": "```json\n{\n  \"category1\": \"pants\",\n  \"fit\": \"slim\",\n  \"stretch\": \"no\",\n  \"reasoning\": \"사용자가 '슬렉스', '바지'"
+        }
+    },
+    {
+        "id": "q06",
+        "query": "치마인데, 어두운 색이며 얇은 옷 골라줘.",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "color": "어두운 색",
+            "thickness": "thin",
+            "reasoning": "사용자가 '치마'를 명시하여 category1을 'skirt'로 지정하였고, '어두운 색'을 언급하여 color를 '어두운 색'으로 지정하였으며, '얇은'이라는 표현을 통해 thickness를 'thin'으로 지정하였습니다. 성별(sex)이나 기장(length) 등 사용자가 직접 언급하지 않은 속성은 규칙에 따라 제외하였습니다."
+        }
+    },
+    {
+        "id": "q07",
+        "query": "치마인데, 짧고 봄에 입을 옷 골라줘.",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "short",
+            "season": "spring",
+            "reasoning": "사용자가 '치마'라고 명시하여 category1을 'skirt'로 지정하였고, '짧고'라는 표현을 통해 length를 'short'로, '봄에 입을'이라는 표현을 통해 season을 'spring'으로 추출하였습니다. 성별(sex) 등 사용자가 직접 언급하지 않은 다른 속성들은 규칙에 따라 제외하였습니다."
+        }
+    },
+    {
+        "id": "q08",
+        "query": "원피스인데 미디정도의 길이고, 가을에 입을 옷 골라줘.",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "length": "half",
+            "season": "fall",
+            "reasoning": "사용자가 '원피스'라고 명시하여 category1을 'dress'로 지정하였고, '미디정도의 길이'라고 명시하여 length를 'half'로 지정하였으며, '가을에 입을 옷'이라고 명시하여 season을 'fall'로 지정하였습니다. 성별(sex) 등 사용자가 직접 언급하지 않은 속성은 규칙에 따라 제외하였습니다."
+        }
+    },
+    {
+        "id": "q09",
+        "query": "원피스인데 두께가 있으면서 어두운 색 골라줘.",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "thickness": "thick",
+            "color": "어두운 색",
+            "reasoning": "사용자가 '원피스'를 직접 언급하여 category1을 'dress'로 지정하였고, '두께가 있으면서'라고 명시하여 thickness를 'thick'으로 지정하였으며, '어두운 색'을 골라달라고 요청하여 color를 '어두운 색'으로 추출하였습니다. 성별(sex)이나 기장(length) 등 사용자가 직접 언급하지 않은 속성은 규칙에 따라 제외하였습니다."
+        }
+    },
+    {
+        "id": "q10",
+        "query": "원피스인데 오버사이즈이며 얇은 원피스 골라줘.",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "fit": "oversize",
+            "thickness": "thin",
+            "reasoning": "사용자가 '원피스'를 직접 언급하여 category1을 'dress'로 지정하였고, '오버사이즈'를 명시하여 fit을 'oversize'로, '얇은'이라는 표현을 사용하여 thickness를 'thin'으로 설정하였습니다. 성별이나 기장 등 언급되지 않은 다른 속성들은 규칙에 따라 제외하였습니다."
+        }
+    }
+]

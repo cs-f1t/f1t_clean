@@ -1,0 +1,570 @@
+[
+    {
+        "id": "test_dress_원피스01",
+        "query": "이 이미지와 비슷한 색의 민소매 원피스 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "sleeve": "sleeveless",
+            "length": "long",
+            "category1": "dress",
+            "sex": "female",
+            "season": "summer",
+            "thickness": "thin",
+            "fit": "regular",
+            "color": "미지정 (이미지 미제공)",
+            "fabric": "미지정 (이미지 미제공)",
+            "reasoning": "사용자가 '민소매 원피스'라고 명시했으므로, sleeve는 'sleeveless', category1은 'dress'로 결정. 원피스는 일반적으로 여성용이므로 sex는 'female'. 민소매는 여름에 적합하므로 season은 'summer'. 원피스는 일반적으로 길이가 길기 때문에 length는 'long'. 소매가 없고 여름용이므로 thickness는 'thin'으로 추정. fit은 명시되지 않아 일반적인 핏인 'regular'로 설정. color와 fabric은 이미지가 제공되지 않아 구체적인 색상이나 소재를 추론할 수 없으므로 '미지정'으로 표기."
+        },
+        "query_mode": "직관",
+        "visual_detail": "",
+        "source_file": "test_dress",
+        "img_id": "3250023",
+        "gt_img_ids": [
+            "3308184"
+        ]
+    },
+    {
+        "id": "test_dress_원피스02",
+        "query": "이 이미지와 비슷한 색인데 긴소매 줄무늬 디테일이 있는 원피스 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "sleeve": "long",
+            "length": "long",
+            "category1": "dress",
+            "sex": "female",
+            "season": "fall",
+            "stretch": "no",
+            "thickness": "medium",
+            "fit": "regular",
+            "color": "무늬 (줄무늬)",
+            "fabric": "코튼 또는 폴리에스터 혼방",
+            "reasoning": "사용자가 '긴소매 줄무늬 디테일이 있는 원피스'를 요청했으며, '원피스'는 dress에 해당하며, '긴소매'는 sleeve: long, '원피스'는 일반적으로 길이가 long으로 추정됨. 성별은 원피스와 줄무늬 디테일이 여성 패션에 더 흔하므로 female로 추론. 계절은 긴소매와 중간 두께의 의류로 추정하여 fall로 설정. stretch는 명시되지 않아 no, thickness는 긴소매 원피스의 일반적인 두께를 고려해 medium, fit은 특별한 언급 없이 regular로 설정. color는 '이미지와 비슷한 색'이지만 이미지 없으므로 '줄무늬'로 추론. fabric은 일반적인 원피스 소재로 코튼 또는 폴리에스터 혼방으로 추정."
+        },
+        "query_mode": "직관",
+        "visual_detail": "스트라이프 줄무늬",
+        "source_file": "test_dress",
+        "img_id": "2643959",
+        "gt_img_ids": [
+            "5573329"
+        ]
+    },
+    {
+        "id": "test_dress_원피스03",
+        "query": "이 이미지의 분위기를 참고해서 전시회 갈 때 입을 원피스 추천해줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "sex": "female",
+            "season": "spring",
+            "length": "long",
+            "sleeve": "long",
+            "fit": "slim",
+            "thickness": "medium",
+            "color": "beige",
+            "fabric": "silk",
+            "reasoning": "사용자가 '전시회 갈 때 입을 원피스'를 요청했으며, '이미지의 분위기'를 참고하라고 했으나 이미지가 제공되지 않았습니다. 따라서 텍스트 기반으로 추론합니다. '전시회'는 세련되고 우아한 분위기를 요구하므로, '원피스'는 dress로 분류되며, 여성용(female)으로 판단됩니다. 전시회는 주로 봄 또는 가을에 열릴 수 있으나, 일반적으로 봄(spring)의 분위기와 더 잘 어울리며, 계절적 특성상 중간 두께(thickness: medium)의 소재가 적합합니다. '분위기'를 고려하여 긴 소매(long sleeve)와 긴 길이(long length)의 슬림핏(slim) 원피스를 추천하며, 우아한 분위기를 위해 베이지(beige) 색상과 실크(silk) 소재를 추론하였습니다. 스타일이 정제된 전시회에 어울리는 고급스러운 소재이기 때문입니다. 스트레치(stretch)는 명시되지 않아 생략합니다."
+        },
+        "query_mode": "의도",
+        "visual_detail": "",
+        "source_file": "test_dress",
+        "img_id": "3998456",
+        "gt_img_ids": [
+            "4213381",
+            "4246808",
+            "5161385",
+            "3902720",
+            "4042186",
+            "5279868",
+            "3131153",
+            "4232409",
+            "5284801"
+        ]
+    },
+    {
+        "id": "test_dress_원피스04",
+        "query": "이 이미지와 비슷한 상황에서 입을 수 있는 원피스 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "sex": "female",
+            "season": "spring",
+            "length": "long",
+            "sleeve": "long",
+            "fit": "regular",
+            "thickness": "medium",
+            "stretch": "yes",
+            "color": "beige",
+            "fabric": "cotton blend",
+            "reasoning": "사용자가 '이미지와 비슷한 상황에서 입을 수 있는 원피스'를 요청했으며, '원피스'는 dress에 해당하므로 category1은 dress로 설정. 일반적으로 원피스는 여성용이므로 sex는 female. '상황'이라는 표현은 일상적인 봄철 착용을 암시하므로 season은 spring. '원피스'는 일반적으로 길이가 긴 경우가 많고, '이미지와 비슷한 상황'은 편안하면서도 정돈된 스타일을 의미하므로 length는 long, fit은 regular. 소매는 일반적인 원피스에 포함되므로 sleeve는 long. 두께는 일반적인 봄용 원피스로 medium, 스트레치는 착용 편안성을 고려해 yes. 색상은 '이미지와 비슷한 상황'에서 일반적인 중성적인 톤을 추론해 beige, 소재는 봄용 원피스에 적합한 cotton blend로 추론."
+        },
+        "query_mode": "의도",
+        "visual_detail": "",
+        "source_file": "test_dress",
+        "img_id": "4644486",
+        "gt_img_ids": [
+            "3933049",
+            "4842908",
+            "5252561",
+            "4211598",
+            "3322915"
+        ]
+    },
+    {
+        "id": "test_dress_원피스05",
+        "query": "이 이미지의 소매와 기장은 유지하고 휴양지에서 입기 좋은 원피스 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "sleeve": "short",
+            "length": "half",
+            "category1": "dress",
+            "sex": "female",
+            "season": "summer",
+            "stretch": "yes",
+            "thickness": "thin",
+            "fit": "loose",
+            "color": "beige",
+            "fabric": "cotton",
+            "reasoning": "사용자가 '원피스'를 요청했으므로 category1은 dress로 결정. '휴양지에서 입기 좋은'이라는 표현에서 season은 summer, thickness는 thin, fabric은 cotton(휴양지에 적합한 통기성 좋은 소재)으로 추론. '소매와 기장은 유지하고'라는 문구에서 기존 이미지의 소매는 short, 기장은 half로 추정. 여성용 원피스이므로 sex는 female. 휴양지용으로 편안한 착용감을 고려해 fit은 loose, stretch는 yes로 설정. 색상은 휴양지에 어울리는 중성적인 색상인 beige로 추론."
+        },
+        "query_mode": "직관+의도",
+        "visual_detail": "",
+        "source_file": "test_dress",
+        "img_id": "5089157",
+        "gt_img_ids": [
+            "3339030",
+            "4266911",
+            "2551113",
+            "5116388",
+            "5116389",
+            "4309304",
+            "3998456",
+            "5284801",
+            "3902720"
+        ]
+    },
+    {
+        "id": "test_dress_원피스06",
+        "query": "이 이미지와 비슷한 색, 비슷한 기장의 데이트룩 원피스 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "sex": "female",
+            "length": "half",
+            "color": "미지정",
+            "fabric": "미지정",
+            "reasoning": "사용자가 '데이트룩 원피스'라고 명시하여 category1은 dress로 결정. '데이트룩'은 일반적으로 여성용 의류를 의미하므로 sex는 female. '기장'에 대해 '비슷한 기장'이라고 언급했으나 구체적인 기장 정보 없이 '데이트룩 원피스'의 일반적인 기장은 허벅지 아래, 무릎 위 수준이므로 length는 half로 추론. 색상(color)과 소재(fabric)은 이미지 미제공, 텍스트에서 구체적 언급 없음으로 미지정. sleeve, stretch, thickness, fit은 텍스트에서 명확한 언급 없고, 원피스의 일반적 특성이나 사용자 의도에서 추론할 수 없으므로 생략."
+        },
+        "query_mode": "직관+의도",
+        "visual_detail": "도트 디테일",
+        "source_file": "test_dress",
+        "img_id": "2509615",
+        "gt_img_ids": [
+            "5019565",
+            "5011978"
+        ]
+    },
+    {
+        "id": "test_pants_하의01",
+        "query": "이 바지랑 같은 색에 패턴이 있는 바지 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "color": "이 바지랑 같은 색",
+            "reasoning": "사용자가 '이 바지랑 같은 색에 패턴이 있는 바지'를 요청했으므로, category1은 'pants'로 결정. 색상은 '이 바지랑 같은 색'이라는 표현에서 추론 가능하며, 구체적인 색상명은 제공되지 않아 상대적 표현으로 유지. 패턴이 있다는 점은 color 속성에 포함된 정보로, 색상과 함께 패턴이 있는 것으로 해석. 다른 속성들은 사용자 입력에서 명확히 언급되거나 암시되지 않아 포함하지 않음."
+        },
+        "query_mode": "직관",
+        "visual_detail": "",
+        "source_file": "test_pants",
+        "img_id": "3504973",
+        "gt_img_ids": [
+            "4778481",
+            "5768119"
+        ]
+    },
+    {
+        "id": "test_pants_하의02",
+        "query": "이 바지랑 비슷한 길이의 카키색 바지 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "length": "long",
+            "color": "카키색",
+            "reasoning": "사용자가 '이 바지랑 비슷한 길이의 카키색 바지'를 요청했으며, '바지'라는 단어로 category1은 pants로 결정. '비슷한 길이'라는 표현에서 기존 바지의 길이를 기준으로 하므로, 일반적인 바지 길이 중에서 'long'으로 추론. '카키색'은 명확히 언급된 색상으로 color 속성에 반영. 나머지 속성들은 사용자 입력에서 명시적이거나 암시되지 않아 포함하지 않음."
+        },
+        "query_mode": "직관",
+        "visual_detail": "",
+        "source_file": "test_pants",
+        "img_id": "5196467",
+        "gt_img_ids": [
+            "4067018"
+        ]
+    },
+    {
+        "id": "test_pants_하의03",
+        "query": "이거보다 더 화사한 바지 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "sex": "female",
+            "color": "화사한 색상",
+            "reasoning": "사용자가 '이거보다 더 화사한 바지 찾아줘'라고 입력했으며, '바지'라는 단어로 category1은 pants로 결정. '화사한'이라는 표현은 밝고 생동감 있는 색상을 의미하므로 color 속성으로 '화사한 색상'을 추론. 사용자가 성별을 명시하지 않았지만, '화사한'이라는 표현은 일반적으로 여성 패션에서 더 자주 사용되므로 sex는 female로 추정. 다른 속성들은 사용자 입력에서 명확히 언급되거나 암시되지 않아 포함하지 않음."
+        },
+        "query_mode": "의도",
+        "visual_detail": "",
+        "source_file": "test_pants",
+        "img_id": "5036372",
+        "gt_img_ids": [
+            "6075253"
+        ]
+    },
+    {
+        "id": "test_pants_하의04",
+        "query": "이 바지랑 비슷한데 좀 더 시원해 보이는 바지 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "season": "summer",
+            "thickness": "thin",
+            "fit": "regular",
+            "fabric": "코튼 또는 린넨 계열",
+            "reasoning": "사용자가 '이 바지랑 비슷한데 좀 더 시원해 보이는 바지'라고 요청했으며, '시원해 보이는'이라는 표현은 여름에 착용하기 적합한 얇은 소재를 암시합니다. 따라서 season은 summer, thickness는 thin으로 추론합니다. 바지이므로 category1은 pants이며, 일반적인 바지의 핏은 regular로 판단합니다. 소재는 시원함을 강조하므로 코튼 또는 린넨 계열로 추론합니다. 소매(sleeve)는 바지와 관련 없으므로 생략, length는 '바지'라는 표현에서 일반적인 길이(long)를 암시하지만, 사용자가 특정 길이를 언급하지 않아서 생략합니다. sex는 명시되지 않아 unisex로 추정하지만, 사용자가 성별을 언급하지 않아서 생략합니다. stretch는 언급되지 않아 생략합니다. color는 구체적인 색상이 언급되지 않아 생략합니다."
+        },
+        "query_mode": "의도",
+        "visual_detail": "",
+        "source_file": "test_pants",
+        "img_id": "4076189",
+        "gt_img_ids": [
+            "3276663",
+            "3968743"
+        ]
+    },
+    {
+        "id": "test_pants_하의05",
+        "query": "이 바지랑 비슷한 색깔에 좀 더 펑키한 바지 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "color": "비슷한 색깔",
+            "fabric": "펑키한 스타일에 적합한 소재 (예: 데님, 코튼 믹스, 또는 패턴이 있는 소재)",
+            "reasoning": "사용자가 '이 바지랑 비슷한 색깔에 좀 더 펑키한 바지'를 요청했으므로, category1은 'pants'로 결정. 색상은 '비슷한 색깔'로 추론, 구체적인 색상은 언급되지 않아 일반화. '펑키한 바지'라는 표현에서 패션적인 스타일을 강조하므로, 소재는 패턴이 있거나 독특한 질감을 가진 것으로 추론 (예: 데님, 코튼 믹스 등). 나머지 속성들은 사용자 입력에서 명확히 언급되거나 암시되지 않아 포함하지 않음."
+        },
+        "query_mode": "직관+의도",
+        "visual_detail": "",
+        "source_file": "test_pants",
+        "img_id": "4513645",
+        "gt_img_ids": [
+            "5930331",
+            "6039090"
+        ]
+    },
+    {
+        "id": "test_pants_하의06",
+        "query": "이 바지처럼 입기 편하고 한쪽에 로고나 그림이 있는 바지를 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "sex": "unisex",
+            "length": "long",
+            "fit": "regular",
+            "stretch": "yes",
+            "thickness": "medium",
+            "color": "미지정",
+            "fabric": "코튼 또는 폴리에스터 혼방",
+            "reasoning": "사용자가 '바지'를 요청했으므로 category1은 pants로 결정. '입기 편하고'라는 표현에서 착용 편의성과 유연성이 강조되므로 stretch는 yes, thickness는 medium으로 추론. '한쪽에 로고나 그림이 있는'은 디자인 요소이므로 color와 fabric에 영향을 주지 않음. length는 일반적인 바지 길이를 의미하므로 long으로 설정. fit은 '입기 편하고'라는 표현에서 정리된 착용감을 고려해 regular로 추정. sex는 성별을 명시하지 않아 unisex로 설정. season은 언급되지 않아 생략. color는 구체적인 색상이 언급되지 않아 미지정. fabric은 일반적인 캐주얼 바지 소재로 코튼 또는 폴리에스터 혼방을 추론."
+        },
+        "query_mode": "직관+의도",
+        "visual_detail": "",
+        "source_file": "test_pants",
+        "img_id": "4063373",
+        "gt_img_ids": [
+            "5164070",
+            "5340355",
+            "6075674"
+        ]
+    },
+    {
+        "id": "test_skirt_스커트01",
+        "query": "해당 스커트랑 색깔은 비슷한데, 길이가 긴 스커트 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "long",
+            "color": "비슷한 색깔",
+            "reasoning": "사용자가 '스커트랑 색깔은 비슷한데, 길이가 긴 스커트 찾아줘'라고 입력했으며, 이는 스커트(category1)를 요청하고 있으며, 길이가 긴(long) 것을 원함을 명확히 암시함. 색상은 '비슷한 색깔'로 구체적인 색상은 언급되지 않아 추론 불가하나, 사용자가 기존 스커트와 비슷한 색을 원함을 나타내므로 '비슷한 색깔'로 표현. 나머지 속성들은 사용자 입력에서 명확히 언급되거나 암시되지 않아 포함하지 않음."
+        },
+        "query_mode": "직관",
+        "visual_detail": "",
+        "source_file": "test_skirt",
+        "img_id": "3650995",
+        "gt_img_ids": [
+            "5396463",
+            "5750849"
+        ]
+    },
+    {
+        "id": "test_skirt_스커트02",
+        "query": "해당 스커트랑 옷 형태랑 길이는 비슷한데, 색깔은 다른 스커트 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "half",
+            "color": "다른 색상",
+            "reasoning": "사용자가 '스커트랑 옷 형태랑 길이는 비슷한데, 색깔은 다른 스커트 찾아줘'라고 입력했으며, '스커트'라는 단어로 category1은 skirt로 결정. '길이는 비슷한데'라는 표현에서 원본 스커트의 길이가 half(미디) 수준임을 추론. 색깔은 '다른 색상'으로 명시되어 있으므로 color 속성에 '다른 색상'을 설정. 나머지 속성들은 사용자 입력에서 명확히 언급되거나 암시되지 않아 포함하지 않음."
+        },
+        "query_mode": "직관",
+        "visual_detail": "",
+        "source_file": "test_skirt",
+        "img_id": "4871967",
+        "gt_img_ids": [
+            "1999486",
+            "4117064",
+            "6014860",
+            "3955104",
+            "5913327",
+            "5427119",
+            "4801968",
+            "1777650",
+            "6152084"
+        ]
+    },
+    {
+        "id": "test_skirt_스커트03",
+        "query": "해당 스커트보다 더 러블리한 옷 골라줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "sex": "female",
+            "length": "long",
+            "color": "pastel",
+            "fabric": "cotton or lace",
+            "reasoning": "사용자가 '스커트보다 더 러블리한 옷'을 요청했으며, '러블리'는 여성스럽고 귀여운 스타일을 의미하므로 sex는 female으로 추론. 스커트는 category1으로 지정. '더 러블리한 옷'이라는 표현은 길이가 긴 스커트(예: 미디 또는 맥시)를 암시하므로 length는 long으로 설정. 러블리한 스타일은 일반적으로 파스텔 컬러와 코튼, 레이스 등의 부드러운 소재를 사용하므로 color는 pastel, fabric은 cotton or lace로 추론. 소매, fit, thickness, stretch, season은 사용자 입력에서 명확히 언급되거나 암시되지 않아 생략."
+        },
+        "query_mode": "의도",
+        "visual_detail": "",
+        "source_file": "test_skirt",
+        "img_id": "4117064",
+        "gt_img_ids": [
+            "6038776",
+            "5090899",
+            "1059651",
+            "4191313"
+        ]
+    },
+    {
+        "id": "test_skirt_스커트04",
+        "query": "해당 스커트에서 느껴지는 힙한 느낌을 없애줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "sex": "female",
+            "fit": "loose",
+            "reasoning": "사용자가 '스커트'를 언급했으므로 category1은 skirt로 결정. '힙한 느낌을 없애줘'라는 표현은 현재 스커트가 힙한(즉, 허벅지 부근이 강조되거나 슬림한 핏) 느낌을 주고 있음을 암시하며, 이를 없애는 방향으로 'loose' 핏을 추천. 힙한 느낌은 일반적으로 slim 또는 regular 핏에서 발생하므로, 이를 완화하기 위해 loose 핏이 적절. 사용자가 성별을 명시하지 않았지만, '스커트'는 일반적으로 여성 의류로 간주되므로 sex는 female. season, thickness, stretch, sleeve, length, color, fabric은 사용자 입력에서 명확히 언급되거나 암시되지 않아 포함하지 않음."
+        },
+        "query_mode": "의도",
+        "visual_detail": "",
+        "source_file": "test_skirt",
+        "img_id": "3509047",
+        "gt_img_ids": [
+            "4912879",
+            "2622966",
+            "4054176"
+        ]
+    },
+    {
+        "id": "test_skirt_스커트05",
+        "query": "해당 스커트보다 더 러블리하고, 봄에 입을 옷 추천해줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "sex": "female",
+            "season": "spring",
+            "length": "long",
+            "color": "pastel",
+            "fabric": "cotton or chiffon",
+            "reasoning": "사용자가 '스커트보다 더 러블리하고, 봄에 입을 옷'을 요청했으며, '러블리'는 여성스러운 스타일을 암시하므로 sex는 female으로 추론. season은 명시된 '봄'에 따라 spring. category1은 '스커트'를 기준으로 하되, 더 러블리한 옷을 추천하므로 스커트와 유사한 여성스러운 하의 또는 드레스가 가능하나, '스커트보다'라는 표현에서 기준이 스커트이므로 category1은 skirt로 유지. length는 '러블리'한 스커트는 일반적으로 긴 길이(long)를 연상시키므로 long. color는 '러블리'한 이미지를 연상시키는 pastel 계열로 추론. fabric은 봄에 입는 러블리한 스커트는 일반적으로 코튼이나 쉬폰과 같은 가벼운 소재를 사용하므로 cotton or chiffon으로 추론. sleeve, thickness, stretch, fit은 해당 의류(스커트)에 적용되지 않거나 명확한 암시 없음으로 생략."
+        },
+        "query_mode": "직관+의도",
+        "visual_detail": "",
+        "source_file": "test_skirt",
+        "img_id": "4117064",
+        "gt_img_ids": [
+            "6038776",
+            "5090899",
+            "4191313"
+        ]
+    },
+    {
+        "id": "test_skirt_스커트06",
+        "query": "해당 스커트에서 느껴지는 힙한 느낌을 없애고, 패턴은 있는 스커트 골라줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "sex": "female",
+            "length": "half",
+            "fit": "regular",
+            "color": "무관",
+            "fabric": "무관",
+            "reasoning": "사용자는 '스커트'를 요청했으므로 category1은 skirt로 설정. '힙한 느낌을 없애고'라는 표현은 과도한 핏이나 과감한 디자인을 피하고 싶다는 의미로, regular fit이 적절함. '패턴은 있는 스커트'라는 표현에서 패턴이 존재하나, 구체적인 색상이나 소재는 언급되지 않아 color와 fabric은 무관으로 처리. '힙한 느낌'을 없애는 것은 일반적으로 과도한 슬림핏이나 오버사이즈보다는 자연스러운 regular 핏을 의미함. 길이는 명시되지 않았으나, 일반적인 스커트의 기본 길이인 half로 추정. 사용자가 여성용 스커트를 찾는 맥락이므로 sex는 female. season, stretch, thickness는 언급되지 않아 포함하지 않음."
+        },
+        "query_mode": "직관+의도",
+        "visual_detail": "패턴",
+        "source_file": "test_skirt",
+        "img_id": "3509047",
+        "gt_img_ids": [
+            "4054176"
+        ]
+    },
+    {
+        "id": "test_top_clothes_상의01",
+        "query": "이 옷이랑 색깔과 소매가 비슷한 상의 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "sleeve": "long",
+            "category1": "top",
+            "color": "미지정",
+            "fabric": "미지정",
+            "reasoning": "사용자가 '이 옷이랑 색깔과 소매가 비슷한 상의'를 요청했으며, '소매'가 언급되었으므로 sleeve 속성은 'long' 또는 'short' 등으로 추론 가능. 다만 구체적인 소매 길이(예: 긴 소매, 반소매 등)는 명시되지 않아, 일반적으로 '소매가 있는 상의'를 의미하는 'long'을 기본값으로 선택. '상의'라는 표현으로 category1은 'top'으로 결정. 색상과 소재는 '비슷한'이라는 표현으로 인해 구체적인 값은 추론 불가능하므로 '미지정'으로 처리. 나머지 속성(sex, season, stretch, thickness, fit, length)은 사용자 입력에서 명확히 언급되거나 암시되지 않아 포함하지 않음."
+        },
+        "query_mode": "직관",
+        "visual_detail": "",
+        "source_file": "test_top_clothes",
+        "img_id": "5301867",
+        "gt_img_ids": [
+            "4819515",
+            "5976977",
+            "6031697"
+        ]
+    },
+    {
+        "id": "test_top_clothes_상의02",
+        "query": "이 옷이랑 소매랑 색상이 비슷하면서, 데님 무늬 상의 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "sleeve": "long",
+            "color": "비슷한 색상",
+            "fabric": "데님",
+            "reasoning": "사용자가 '이 옷이랑 소매랑 색상이 비슷하면서, 데님 무늬 상의 찾아줘'라고 입력했으며, '데님 무늬 상의'라는 표현에서 category1은 top으로 추론됨. '소매랑 색상이 비슷'이라는 표현에서 소매가 있는 상의임을 암시하므로 sleeve는 long으로 설정 (소매 길이가 명시되지 않아 기본적으로 long으로 추정). '데님 무늬'는 fabric으로 '데님'으로 추론. 색상은 '비슷한 색상'으로 구체적 색상이 명시되지 않아 일반적 표현으로 유지. season, sex, stretch, thickness, fit은 사용자 입력에서 명확히 언급되거나 암시되지 않아 제외."
+        },
+        "query_mode": "직관",
+        "visual_detail": "데님 무늬",
+        "source_file": "test_top_clothes",
+        "img_id": "4796684",
+        "gt_img_ids": [
+            "3391133"
+        ]
+    },
+    {
+        "id": "test_top_clothes_상의03",
+        "query": "이 옷처럼 깔끔한 상의 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "sex": "unisex",
+            "season": "spring",
+            "fit": "slim",
+            "color": "white",
+            "fabric": "cotton",
+            "reasoning": "사용자가 '이 옷처럼 깔끔한 상의'라고 언급했으며, '상의'라는 단어로 category1은 top으로 결정. '깔끔한'이라는 표현은 일반적으로 심플하고 정돈된 스타일을 의미하며, 이는 slim fit과 연관성이 높음. 색상은 '깔끔한' 상의를 연상시키는 흰색으로 추론. 소재는 깔끔하고 기본적인 상의에 자주 사용되는 코튼으로 추정. 계절은 '깔끔한 상의'가 일반적으로 봄철에 많이 착용되므로 spring으로 설정. 성별은 '이 옷처럼'이라는 표현에서 특정 성별을 언급하지 않아 unisex로 판단. 소매 길이, 길이, 두께, 신축성은 사용자 입력에서 명확히 언급되지 않아 생략."
+        },
+        "query_mode": "의도",
+        "visual_detail": "",
+        "source_file": "test_top_clothes",
+        "img_id": "5031997",
+        "gt_img_ids": [
+            "3208493",
+            "5031972"
+        ]
+    },
+    {
+        "id": "test_top_clothes_상의04",
+        "query": "이 옷이랑 비슷한데 미니멀한 상의 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "sex": "female",
+            "fit": "slim",
+            "color": "미지정",
+            "fabric": "미지정",
+            "reasoning": "사용자가 '이 옷이랑 비슷한데 미니멀한 상의 찾아줘'라고 입력했으며, '상의'라는 단어로 category1은 top으로 결정됨. '미니멀한'이라는 표현은 디자인 스타일을 나타내며, 일반적으로 미니멀한 상의는 슬림한 핏(slim)을 가진 경우가 많으므로 fit을 slim으로 추론. 사용자가 성별을 명시하지 않았으나, '미니멀한 상의'라는 표현은 일반적으로 여성 패션에서 더 자주 사용되며, 여성용 상의를 요청한 것으로 판단하여 sex를 female으로 설정. 소매 길이(sleeve), 길이(length), 계절(season), 신축성(stretch), 두께(thickness)는 사용자 입력에서 명확히 언급되거나 암시되지 않아 포함하지 않음. 색상(color)과 소재(fabric)도 구체적인 언급이 없어 미지정으로 처리."
+        },
+        "query_mode": "의도",
+        "visual_detail": "",
+        "source_file": "test_top_clothes",
+        "img_id": "5938209",
+        "gt_img_ids": [
+            "2574189"
+        ]
+    },
+    {
+        "id": "test_top_clothes_상의05",
+        "query": "이 옷이랑 색상과 소매가 비슷하면서, 캐주얼하게 외출할 때 입을 상의 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "sleeve": "long",
+            "category1": "top",
+            "sex": "unisex",
+            "season": "spring",
+            "stretch": "no",
+            "thickness": "medium",
+            "fit": "regular",
+            "color": "다양한 색상 (사용자 기준 색상과 유사)",
+            "fabric": "코튼 또는 폴리에스터 혼방",
+            "reasoning": "사용자가 '이 옷이랑 색상과 소매가 비슷하면서'라고 언급했으므로, 소매는 'long'으로 추정 (소매가 있는 상의를 기준으로 함). '캐주얼하게 외출할 때 입을 상의'라는 표현에서 category1은 'top'으로 결정. 성별은 명시되지 않아 'unisex'로 설정. 외출용 캐주얼 상의이므로 계절은 봄(spring)으로 추정 (봄철 캐주얼 의류가 일반적). 스타일이 캐주얼하므로 stretch는 'no', thickness는 'medium'으로 판단. fit은 일반적인 캐주얼 상의에 해당하는 'regular'로 설정. color는 사용자가 기준으로 삼는 색상과 유사한 색상이 필요하므로 '다양한 색상 (사용자 기준 색상과 유사)'으로 표현. fabric은 캐주얼 상의에 일반적으로 사용되는 코튼 또는 폴리에스터 혼방으로 추론."
+        },
+        "query_mode": "직관+의도",
+        "visual_detail": "",
+        "source_file": "test_top_clothes",
+        "img_id": "1198762",
+        "gt_img_ids": [
+            "4734501",
+            "4750475",
+            "5405768",
+            "5440026"
+        ]
+    },
+    {
+        "id": "test_top_clothes_상의06",
+        "query": "이 옷이랑 색상과 소매가 비슷하면서, 딸기 이모티콘 같은 귀여운 그림이 있는 상의 찾아줘",
+        "image_path": null,
+        "image_url": null,
+        "inferred_attributes": {
+            "sleeve": "long",
+            "category1": "top",
+            "sex": "female",
+            "color": "딸기색",
+            "fabric": "코튼 또는 폴리에스터 혼방",
+            "reasoning": "사용자가 '이 옷이랑 색상과 소매가 비슷하면서'라고 언급했으므로, 소매는 기존 상의와 동일한 형태를 가짐을 의미하며, 일반적으로 상의의 소매는 long, short, sleeveless 중 하나이지만, '딸기 이모티콘 같은 귀여운 그림이 있는 상의'라는 표현은 여성용 캐주얼 상의를 암시하므로 sleeve는 long으로 추정 (귀여운 디자인은 일반적으로 long 소매와 연관됨). category1은 '상의'이므로 top. sex는 '딸기 이모티콘 같은 귀여운 그림'이라는 표현이 여성용 패션에 더 흔히 사용되므로 female. color는 '딸기 이모티콘'에서 딸기색(빨간색 계열)으로 추론. fabric은 일반적인 캐주얼 상의 소재로 코튼 또는 폴리에스터 혼방을 추정. season, stretch, thickness, fit은 사용자 입력에서 명확히 언급되지 않아 생략."
+        },
+        "query_mode": "직관+의도",
+        "visual_detail": "딸기 이모티콘",
+        "source_file": "test_top_clothes",
+        "img_id": "4983430",
+        "gt_img_ids": [
+            "6154207"
+        ]
+    }
+]

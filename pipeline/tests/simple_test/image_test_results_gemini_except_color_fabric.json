@@ -1,0 +1,221 @@
+[
+    {
+        "id": "2505951_C",
+        "query": "이 티셔츠랑 색이 비슷하며, 신축성이 있는 맨투맨 골라줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/2505951.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "stretch": "yes",
+            "reasoning": "사용자가 '맨투맨'을 요청하여 카테고리를 'top'으로 분류하였고, '신축성이 있는' 제품을 원한다고 명시하여 'stretch' 속성을 'yes'로 설정했습니다. 색상에 대한 언급이 있으나 제공된 스키마 속성에 색상이 포함되어 있지 않아 제외하였습니다."
+        }
+    },
+    {
+        "id": "2505951_A",
+        "query": "이 티셔츠와 기장이 비슷한 상의 찾아줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/2505951.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "reasoning": "사용자가 '티셔츠' 및 '상의'를 언급하여 카테고리를 'top'으로 지정하였습니다. 사용자가 '기장'을 언급하였으나, 제공된 속성 정의에서 'length'는 하의(pants/skirt) 및 원피스(dress)에만 적용되므로 상의 카테고리에는 포함하지 않았습니다."
+        }
+    },
+    {
+        "id": "2080479_C",
+        "query": "이 맨투맨이랑 기장이 비슷하며, 여름에 입을 상의 골라줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/2080479.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "season": "summer",
+            "reasoning": "사용자가 '상의'를 명시하여 category1을 'top'으로 지정하였고, '여름에 입을'이라고 언급하여 season을 'summer'로 지정하였습니다. 언급된 '기장'은 상의에 대한 것이므로, 하의/원피스/스커트에만 적용되는 length 속성은 제외하였습니다."
+        }
+    },
+    {
+        "id": "2080479_A",
+        "query": "이 맨투맨과 색이 비슷한 티셔츠 찾아줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/2080479.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "reasoning": "사용자가 '티셔츠'를 찾아달라고 명시적으로 언급하여 카테고리를 'top'으로 설정하였습니다. 색상에 대한 언급이 있으나, 정의된 스키마 속성(sleeve, length, sex, season, stretch, thickness, fit)에 해당하지 않으므로 다른 속성은 추출하지 않았습니다."
+        }
+    },
+    {
+        "id": "2768893_C",
+        "query": "이 바지랑 기장은 비슷한데, 두께가 얇은 바지 추천해줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/2768893.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "length": "long",
+            "thickness": "thin",
+            "reasoning": "사용자가 '바지'를 언급하여 category1을 'pants'로 지정하였고, 이미지 속 바지와 '기장은 비슷한' 제품을 요구하여 이미지의 긴 기장을 토대로 length를 'long'으로 지정하였으며, '두께가 얇은' 제품을 원하여 thickness를 'thin'으로 지정하였습니다."
+        }
+    },
+    {
+        "id": "2768893_A",
+        "query": "이 바지랑 색이 비슷한 바지 찾아줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/2768893.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "reasoning": "사용자가 '이 바지랑'이라며 '바지'를 명시적으로 언급하였으므로 category1을 'pants'로 분류하였습니다. 색상에 대한 언급이 있었으나 제공된 속성 스키마에 색상(color) 속성이 포함되어 있지 않아 제외하였으며, 기장이나 성별 등 다른 속성은 언급되지 않아 추출하지 않았습니다."
+        }
+    },
+    {
+        "id": "3276663_C",
+        "query": "이 바지랑 색은 비슷한데, 핏이 보통인 슬랙스 추천해줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/3276663.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "fit": "regular",
+            "reasoning": "사용자가 '이 바지', '슬랙스'라고 언급하여 카테고리를 'pants'로 지정하였고, '핏이 보통인'이라는 표현을 통해 핏을 'regular'로 지정하였습니다."
+        }
+    },
+    {
+        "id": "3276663_A",
+        "query": "이 바지보다 기장은 짧은 바지 찾아줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/3276663.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "length": "short",
+            "reasoning": "사용자가 '바지'를 명시하여 category1을 'pants'로 지정하였고, '이 바지보다 기장은 짧은' 바지를 원한다고 언급하여 기준 이미지의 하프(half) 기장보다 짧은 'short' 기장을 선택했습니다."
+        }
+    },
+    {
+        "id": "1202891_C",
+        "query": "이 치마랑 기장은 비슷한데, 신축성이 있는 치마 골라줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/1202891.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "long",
+            "stretch": "yes",
+            "reasoning": "사용자가 '치마'를 언급하여 category1을 'skirt'로 설정하였고, 이미지 속 치마의 기장이 무릎 아래로 내려오는 미디/롱 기장이므로 '이 치마랑 기장은 비슷한데'라는 요청을 반영하여 length를 'long'으로 설정했습니다. 또한 '신축성이 있는'이라는 표현을 통해 stretch를 'yes'로 지정했습니다."
+        }
+    },
+    {
+        "id": "1202891_A",
+        "query": "이 치마랑 색이 비슷한 치마 찾아줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/1202891.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "reasoning": "사용자가 '치마'라는 단어를 명시적으로 언급하여 category1을 'skirt'로 지정하였습니다. 색상에 대한 언급이 있으나, 제공된 속성 스키마에 색상(color) 속성이 존재하지 않아 해당 속성은 제외하였습니다."
+        }
+    },
+    {
+        "id": "2948636_C",
+        "query": "이 치마랑 기장은 비슷한데, 얇은 치마 골라줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/2948636.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "long",
+            "thickness": "thin",
+            "reasoning": "사용자가 '치마'를 언급하여 category1을 'skirt'로 설정하였고, 이미지 속 치마와 비슷한 기장을 요구하여 이미지의 미디~롱 기장에 해당하는 'long'을 length로 설정하였습니다. 또한 '얇은' 치마를 원한다고 명시하여 thickness를 'thin'으로 설정하였습니다."
+        }
+    },
+    {
+        "id": "2948636_A",
+        "query": "이 치마보다 기장이 긴 치마 찾아줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/2948636.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "long",
+            "reasoning": "사용자가 언급한 '치마'를 통해 category1을 'skirt'로 판단하였으며, '기장이 긴'이라는 표현을 통해 length를 'long'으로 설정하였습니다."
+        }
+    },
+    {
+        "id": "1349530_C",
+        "query": "이 치마랑 색은 비슷한데, 와이드 핏의 치마 골라줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/1349530.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "fit": "loose",
+            "reasoning": "사용자가 '치마'를 명시하여 카테고리를 'skirt'로 설정하였고, '와이드 핏'을 언급하여 핏을 'loose'로 설정하였습니다."
+        }
+    },
+    {
+        "id": "1349530_A",
+        "query": "이 치마랑 비슷한 기장의 치마 찾아줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/1349530.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "long",
+            "reasoning": "사용자가 '치마'를 명시하여 category1을 'skirt'로 지정하였고, '비슷한 기장'을 언급하여 이미지 속 무릎 아래로 내려오는 치마의 길이를 바탕으로 length를 'long'으로 지정하였습니다."
+        }
+    },
+    {
+        "id": "1350308_C",
+        "query": "이 원피스랑 기장은 비슷한데, 겨울에 입을 원피스 골라줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/1350308.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "length": "half",
+            "season": "winter",
+            "reasoning": "사용자가 '원피스'를 언급하여 category1을 'dress'로 지정하였고, '이 원피스랑 기장은 비슷한데'라는 표현을 통해 이미지 속 무릎 부근까지 오는 기장을 반영하여 length를 'half'로 설정하였습니다. 또한 '겨울에 입을'이라고 명시하여 season을 'winter'로 설정하였습니다."
+        }
+    },
+    {
+        "id": "1350308_A",
+        "query": "이 원피스랑 색이 비슷한 원피스 찾아줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/1350308.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "reasoning": "사용자가 '원피스'라는 단어를 직접 언급하여 카테고리를 'dress'로 지정하였습니다. 색상에 대해 언급하였으나 제공된 스키마 속성(sleeve, length, sex, season, stretch, thickness, fit)에는 색상 속성이 포함되어 있지 않으므로 제외하였습니다."
+        }
+    },
+    {
+        "id": "3639514_C",
+        "query": "이 원피스랑 색은 비슷한데, 두꺼운 원피스 골라줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/3639514.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "thickness": "thick",
+            "reasoning": "사용자가 '원피스'를 직접 언급하여 category1을 'dress'로 지정하였고, '두꺼운' 원피스를 원한다고 명시하여 thickness를 'thick'으로 지정하였습니다."
+        }
+    },
+    {
+        "id": "3639514_A",
+        "query": "이 원피스보다 기장이 짧은 원피스 찾아줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/3639514.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "length": "short",
+            "reasoning": "사용자가 '원피스'를 언급하여 category1을 'dress'로 지정하였고, '기장이 짧은' 제품을 원한다고 명시하여 length를 'short'로 설정하였습니다."
+        }
+    },
+    {
+        "id": "3602675_C",
+        "query": "이 원피스랑 기장은 비슷한데, 밝은 색 원피스 골라줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/3602675.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "length": "long",
+            "reasoning": "사용자가 '원피스'를 언급하여 category1을 'dress'로 지정하였고, '이 원피스랑 기장은 비슷한데'라며 이미지 속 원피스의 기장과 유사한 기장을 요구하여 이미지의 롱 기장을 바탕으로 length를 'long'으로 지정하였습니다."
+        }
+    },
+    {
+        "id": "3602675_A",
+        "query": "이 원피스랑 기장이 비슷한 원피스 찾아줘.",
+        "image_path": "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/학교수업/찐막/컴종설/코드/f1t/pipeline/tests/simple_test/ref_images/3602675.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "length": "long",
+            "reasoning": "사용자가 '원피스'를 언급하여 category1을 'dress'로 지정하였고, '기장이 비슷한'이라며 기장을 명시하여 이미지 속 원피스의 롱한 기장을 토대로 length를 'long'으로 지정하였습니다."
+        }
+    }
+]

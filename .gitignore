@@ -1,0 +1,35 @@
+# Secrets & environment
+.env
+.envrc
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node
+node_modules/
+dist/
+*.local
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# Generated AI caches
+.omx/
+**/.db_emb_cache_*.npz
+**/.image_cache/
+**/filtering_results/.png_sheet_image_cache/
+
+# Images & binary data
+*.jpg
+*.png
+
+# Generated & data directories
+pipeline/database_images/
+pipeline/ref_images/
+pipeline/pipeline_output.json

@@ -1,0 +1,229 @@
+[
+    {
+        "id": "2505951_C",
+        "query": "이 티셔츠랑 색이 비슷하며, 신축성이 있는 맨투맨 골라줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2505951.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "color": "회색",
+            "stretch": "yes",
+            "reasoning": "사용자가 '이 티셔츠랑 색이 비슷하며, 신축성이 있는 맨투맨 골라줘.'라고 요청했으며, 이 문장에서 명시적으로 언급한 속성은 '색이 비슷함'과 '신축성 있음'입니다. 이미지에서 티셔츠의 색은 회색이며, 사용자가 '신축성 있는'을 요구했으므로 stretch: yes로 설정합니다. 사용자가 언급하지 않은 속성(예: category1, fit, season 등)은 포함하지 않습니다."
+        }
+    },
+    {
+        "id": "2505951_A",
+        "query": "이 티셔츠와 기장이 비슷한 상의 찾아줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2505951.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "length": "long",
+            "reasoning": "사용자가 '이 티셔츠와 기장이 비슷한 상의'라고 요청했으며, '기장'은 상의의 길이를 의미합니다. 따라서 'length' 속성을 'long'으로 지정합니다. '티셔츠'는 'top' 카테고리에 해당하며, 이는 사용자가 명시한 '상의'와 일치합니다. 사용자가 색상, 소매 길이, 핏, 계절 등 다른 속성에 대해 언급하지 않았으므로, 해당 속성은 포함하지 않습니다."
+        }
+    },
+    {
+        "id": "2080479_C",
+        "query": "이 맨투맨이랑 기장이 비슷하며, 여름에 입을 상의 골라줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2080479.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "top",
+            "length": "half",
+            "season": "summer",
+            "reasoning": "사용자가 '이 맨투맨이랑 기장이 비슷하며, 여름에 입을 상의 골라줘.'라고 언급했으며, 이는 '기장'이 비슷한 상의를 원함을 의미하므로 length: half를 지정. 또한 '여름에 입을 상의'라고 명시했으므로 season: summer를 지정. category1은 '상의'라는 표현에서 top으로 유추 가능. 사용자가 색상, 소재, 핏, 스타일 등은 언급하지 않아 해당 속성은 포함하지 않음."
+        }
+    },
+    {
+        "id": "2080479_A",
+        "query": "이 맨투맨과 색이 비슷한 티셔츠 찾아줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2080479.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "color": "회색",
+            "reasoning": "사용자가 '이 맨투맨과 색이 비슷한 티셔츠 찾아줘'라고 요청했으며, 이는 색상(color)에 대한 명시적 요청입니다. 이미지에서 맨투맨의 색은 회색(또는 그레이 톤)으로 보이며, 사용자가 '색이 비슷한' 티셔츠를 원하므로 color 속성만 포함합니다. 사용자가 언급하지 않은 속성(예: category1, sleeve 등)은 포함하지 않습니다."
+        }
+    },
+    {
+        "id": "2768893_C",
+        "query": "이 바지랑 기장은 비슷한데, 두께가 얇은 바지 추천해줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2768893.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "length": "long",
+            "thickness": "thin",
+            "reasoning": "사용자가 '이 바지랑 기장은 비슷한데, 두께가 얇은 바지 추천해줘.'라고 말했으며, 이는 '기장'과 '두께'를 명시적으로 언급한 것으로, 기장은 '비슷한' 즉 기존 바지와 동일한 길이를 의미하므로 'long'으로 판단. 두께는 '얇은'으로 명시되어 'thin'으로 설정. 사용자가 언급하지 않은 색상, 소재, 핏 등은 포함하지 않음."
+        }
+    },
+    {
+        "id": "2768893_A",
+        "query": "이 바지랑 색이 비슷한 바지 찾아줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2768893.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "color": "เขียว",
+            "category1": "pants",
+            "reasoning": "사용자가 '이 바지랑 색이 비슷한 바지 찾아줘'라고 요청했으며, 이는 '색'을 명시적으로 언급한 것으로, 이미지에서 보이는 바지의 색상은 어두운 녹색(เขียว)입니다. '바지'라는 표현은 category1을 pants로 지정할 수 있으나, 사용자가 '바지'를 언급했기 때문에 category1은 포함합니다. 나머지 속성들은 사용자가 명시적으로 언급하지 않았으므로 포함하지 않습니다."
+        }
+    },
+    {
+        "id": "3276663_C",
+        "query": "이 바지랑 색은 비슷한데, 핏이 보통인 슬랙스 추천해줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/3276663.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "pants",
+            "color": "검정",
+            "fit": "regular",
+            "reasoning": "사용자가 '이 바지랑 색은 비슷한데, 핏이 보통인 슬랙스 추천해줘.'라고 요청했으며, 이는 '바지'에 해당하는 category1: pants, 색상(color)은 이미지에서 검정색임을 확인하고, '핏이 보통인'이라는 표현으로 fit: regular를 추출함. 사용자가 언급하지 않은 속성(예: length, season, fabric 등)은 포함하지 않음."
+        }
+    },
+    {
+        "id": "3276663_A",
+        "query": "이 바지보다 기장은 짧은 바지 찾아줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/3276663.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "length": "short",
+            "reasoning": "사용자가 '이 바지보다 기장은 짧은 바지 찾아줘'라고 요청했으며, '기장'은 바지의 길이를 의미하므로 'length' 속성이 해당합니다. 이미지에서 보이는 바지의 기장은 'short'에 해당하지만, 사용자가 요청한 것은 '이 바지보다 짧은' 바지이므로, 기준이 되는 바지의 길이를 'short'로 인식하고, 그보다 짧은 것을 찾는 것이 목적입니다. 따라서 사용자가 명시한 속성은 'length'이며, 그 값은 'short'입니다. 사용자가 다른 속성(예: 색상, 소재, 핏 등)을 언급하지 않았으므로, 해당 속성은 포함하지 않습니다."
+        }
+    },
+    {
+        "id": "1202891_C",
+        "query": "이 치마랑 기장은 비슷한데, 신축성이 있는 치마 골라줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/1202891.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "long",
+            "stretch": "yes",
+            "reasoning": "사용자가 '이 치마랑 기장은 비슷한데'라고 언급하여 치마의 기장이 'long'임을 명시적으로 언급했으며, '신축성이 있는 치마'라고 요청하여 'stretch: yes'를 요구함. 사용자는 색상, 소재, 계절, 핏 등은 언급하지 않아 해당 속성은 포함하지 않음. 카테고리는 '치마'라는 표현에서 'skirt'로 유추 가능하나, 사용자가 직접 언급한 속성은 기장과 신축성만임."
+        }
+    },
+    {
+        "id": "1202891_A",
+        "query": "이 치마랑 색이 비슷한 치마 찾아줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/1202891.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "color": "검정, 흰색, 빨간색, 노란색 체크무늬",
+            "reasoning": "사용자가 '이 치마랑 색이 비슷한 치마 찾아줘'라고 요청했으며, 이는 '치마'라는 카테고리와 '색'이라는 속성을 명시적으로 언급한 것입니다. 이미지에서 치마의 색상은 검정, 흰색, 빨간색, 노란색이 섞인 체크무늬 패턴으로 구성되어 있습니다. 사용자가 '체크무늬'를 직접 언급하지 않았으나, '색'을 묻는 맥락에서 패턴이 색의 일부로 포함될 수 있으므로, 시각적 색상 구성과 함께 체크무늬를 포함한 색상 설명을 제공합니다. 기타 속성(예: 길이, 계절, 소재 등)은 사용자가 언급하지 않았으므로 포함하지 않습니다."
+        }
+    },
+    {
+        "id": "2948636_C",
+        "query": "이 치마랑 기장은 비슷한데, 얇은 치마 골라줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2948636.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "long",
+            "thickness": "thin",
+            "reasoning": "사용자가 '이 치마랑 기장은 비슷한데, 얇은 치마 골라줘.'라고 말했으며, 이는 치마(category1)의 기장(length)이 길고, 두께(thickness)가 얇아야 한다는 것을 명시적으로 요청한 것입니다. 사용자는 색상, 소재, 계절, 핏 등은 언급하지 않았으므로 해당 속성은 포함하지 않습니다."
+        }
+    },
+    {
+        "id": "2948636_A",
+        "query": "이 치마보다 기장이 긴 치마 찾아줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/2948636.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "long",
+            "reasoning": "사용자가 '이 치마보다 기장이 긴 치마'라고 요청했으며, '기장'은 치마의 길이를 의미하므로 length 속성이 명시적으로 언급된 것입니다. '치마'는 category1으로 분류되며, '기장이 긴'은 length 속성의 'long' 값을 의미합니다. 사용자가 다른 속성(예: 색상, 소재, 핏 등)을 언급하지 않았으므로 해당 속성은 포함하지 않습니다."
+        }
+    },
+    {
+        "id": "1349530_C",
+        "query": "이 치마랑 색은 비슷한데, 와이드 핏의 치마 골라줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/1349530.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "color": "빨간색, 초록색, 노란색 체크무늬",
+            "fit": "와이드 핏",
+            "reasoning": "사용자가 '이 치마랑 색은 비슷한데, 와이드 핏의 치마 골라줘.'라고 요청했으며, 이는 치마(category1)에 대한 요청이며, 색(color)과 핏(fit)을 명시적으로 언급했습니다. 색은 이미지에서 빨간색, 초록색, 노란색 체크무늬로 확인되며, 핏은 '와이드 핏'으로 명시되었습니다. 사용자가 언급하지 않은 속성(예: 길이, 계절, 소재 등)은 포함하지 않았습니다."
+        }
+    },
+    {
+        "id": "1349530_A",
+        "query": "이 치마랑 비슷한 기장의 치마 찾아줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/1349530.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "skirt",
+            "length": "long",
+            "reasoning": "사용자가 '이 치마랑 비슷한 기장의 치마 찾아줘'라고 요청했으며, '기장'은 치마의 길이를 의미합니다. 따라서 'length' 속성을 'long'으로 지정합니다. 이미지에서 치마는 무릎 아래까지 내려오는 길이로, 'long'에 해당합니다. 사용자가 '치마'라고 언급했으므로 'category1'은 'skirt'로 설정합니다. 사용자가 다른 속성(예: 색상, 패턴, 소재 등)을 언급하지 않았으므로, 해당 속성은 포함하지 않습니다."
+        }
+    },
+    {
+        "id": "1350308_C",
+        "query": "이 원피스랑 기장은 비슷한데, 겨울에 입을 원피스 골라줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/1350308.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "length": "short",
+            "season": "winter",
+            "reasoning": "사용자가 '원피스'라고 언급했으므로 category1은 dress로 설정. '기장은 비슷한데'라고 했으므로 length는 short으로 설정. '겨울에 입을 원피스'라고 명시했으므로 season은 winter로 설정. 사용자가 다른 속성(예: 색상, 소재, 핏 등)을 언급하지 않았으므로 해당 속성은 포함하지 않음."
+        }
+    },
+    {
+        "id": "1350308_A",
+        "query": "이 원피스랑 색이 비슷한 원피스 찾아줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/1350308.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "color": "보라색, 검정색, 흰색, 녹색, 노란색, 빨간색 등 다채로운 색상",
+            "reasoning": "사용자가 '이 원피스랑 색이 비슷한 원피스 찾아줘'라고 요청했으며, 이는 '색'이 명시적으로 언급된 유일한 속성입니다. 따라서 'color' 속성만 포함하며, 이미지에서 보이는 원피스의 주요 색상(보라색, 검정색, 흰색, 녹색, 노란색, 빨간색 등 다채로운 색상)을 기재하였습니다. '원피스'라는 표현으로부터 'category1: dress'를 유추하였으나, 이는 의류 유형에 대한 명시적 언급이므로 허용됩니다. 나머지 속성(예: length, sleeve, season 등)은 사용자가 언급하지 않았으므로 포함하지 않습니다."
+        }
+    },
+    {
+        "id": "3639514_C",
+        "query": "이 원피스랑 색은 비슷한데, 두꺼운 원피스 골라줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/3639514.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "color": "크림색",
+            "thickness": "thick",
+            "reasoning": "사용자가 '이 원피스랑 색은 비슷한데, 두꺼운 원피스 골라줘.'라고 요청했으며, 이는 '원피스'라는 카테고리, '색은 비슷한'이라는 표현으로 이미지의 색상(크림색)을 기준으로 하며, '두꺼운'이라는 표현으로 thickness 속성에 'thick'를 지정해야 함. 사용자가 언급하지 않은 속성(예: length, sleeve, season 등)은 포함하지 않음."
+        }
+    },
+    {
+        "id": "3639514_A",
+        "query": "이 원피스보다 기장이 짧은 원피스 찾아줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/3639514.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "length": "long",
+            "reasoning": "사용자가 '이 원피스보다 기장이 짧은 원피스 찾아줘'라고 요청했으며, 이는 '기장' 즉 'length' 속성에 대한 명시적 언급입니다. 기장이 '짧은' 원피스를 원하므로, 현재 이미지의 원피스는 기장이 '긴' 상태입니다. 따라서 'length' 속성은 'long'으로 판단됩니다. 사용자는 '원피스'라고 했으므로 'category1'은 'dress'로 설정합니다. 사용자가 언급하지 않은 속성(예: color, sleeve, sex 등)은 포함하지 않습니다."
+        }
+    },
+    {
+        "id": "3602675_C",
+        "query": "이 원피스랑 기장은 비슷한데, 밝은 색 원피스 골라줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/3602675.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "length": "long",
+            "color": "밝은 색",
+            "reasoning": "사용자가 '원피스랑 기장은 비슷한데, 밝은 색 원피스 골라줘'라고 명시적으로 언급했으므로, category1은 '원피스'에 해당하는 'dress', length는 '기장은 비슷한데'에서 'long'으로, color는 '밝은 색'으로 설정함. 사용자가 언급하지 않은 속성(예: sleeve, sex, season 등)은 포함하지 않음."
+        }
+    },
+    {
+        "id": "3602675_A",
+        "query": "이 원피스랑 기장이 비슷한 원피스 찾아줘.",
+        "image_path": "/home1/jhp0720/data/repo2/f1t/pipeline/tests/simple_test/ref_images/3602675.jpg",
+        "image_url": null,
+        "inferred_attributes": {
+            "category1": "dress",
+            "length": "long",
+            "reasoning": "사용자가 '이 원피스랑 기장이 비슷한 원피스 찾아줘'라고 요청했으며, '기장'은 원피스의 길이를 의미하므로 length 속성이 필요합니다. 이미지에서 원피스는 무릎 아래까지 내려오는 길이로, 'long'으로 분류됩니다. category1은 '원피스'라는 단어에서 유추할 수 있으나, 지침에 따라 명시된 속성만 포함하므로 category1도 포함합니다. 사용자가 다른 속성(예: 색상, 소재, 핏 등)을 언급하지 않았으므로, 그에 대한 정보는 포함하지 않습니다."
+        }
+    }
+]

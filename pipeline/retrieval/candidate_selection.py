@@ -1,0 +1,804 @@
+from __future__ import annotations
+
+import os
+import re
+import unicodedata
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
+from typing import Any, Iterable
+
+
+VALID_TABLES = {
+    "musinsa_pants",
+    "musinsa_top_clothes",
+    "musinsa_skirt_dress",
+}
+
+# 카테고리 → 테이블 라우팅
+TABLE_ROUTING_MAP = {
+    "top": "musinsa_top_clothes",
+    "pants": "musinsa_pants",
+    "skirt": "musinsa_skirt_dress",
+    "dress": "musinsa_skirt_dress",
+    "one-piece": "musinsa_skirt_dress",
+}
+
+# 영어 속성값 → DB 한글값 변환
+DB_TRANSLATION_MAP = {
+    "sex": {"male": "남성", "female": "여성", "unisex": ["남성", "여성"]},
+    "fit": {
+        "slim": "슬림",
+        "regular": "레귤러",
+        "loose": "루즈",
+        "oversized": "오버사이즈",
+        "wide": ["루즈", "오버사이즈"],
+    },
+    "stretch": {"no": "없음", "yes": "있음"},
+    "thickness": {
+        "thin": ["얇음", "약간 얇음"],
+        "medium": "보통",
+        "thick": ["두꺼움", "약간두꺼움", "약간 두꺼움"],
+    },
+    "season": {"spring": "봄", "summer": "여름", "fall": "가을", "winter": "겨울"},
+}
+
+ARRAY_COLUMNS = ["sex", "fit", "stretch", "thickness", "season"]
+TEXT_COLUMNS = ["sleeve", "length"]
+
+EXACT_FILTER_FIELDS = (
+    "sleeve",
+    "length",
+    "category1",
+    "sex",
+    "season",
+    "stretch",
+    "thickness",
+    "fit",
+)
+SOFT_TEXT_RERANK_FIELDS = ()
+INTENT_EXTRACTION_STATUS = "gemini_intent_analysis"
+METADATA_PREFETCH_LIMIT = 1000
+
+CATEGORY_RULES = (
+    ("one-piece", "musinsa_skirt_dress", "원피스", ("원피스", "드레스", "one piece", "one-piece")),
+    ("skirt", "musinsa_skirt_dress", "스커트", ("스커트", "치마", "skirt")),
+    ("pants", "musinsa_pants", None, ("바지", "팬츠", "청바지", "데님", "슬랙스", "조거", "쇼츠", "반바지", "pants", "jeans")),
+    ("top", "musinsa_top_clothes", None, ("상의", "티셔츠", "티 ", "셔츠", "후드", "후드티", "맨투맨", "니트", "가디건", "블라우스", "top", "shirt", "hoodie")),
+)
+
+ATTRIBUTE_PATTERNS: dict[str, tuple[tuple[str, tuple[str, ...]], ...]] = {
+    "sleeve": (
+        ("sleeveless", ("민소매", "나시", "sleeveless")),
+        ("long", ("긴팔", "긴 소매", "소매가 긴", "롱슬리브", "long sleeve", "long-sleeve")),
+        ("short", ("반팔", "short sleeve", "short-sleeve")),
+    ),
+    "length": (
+        ("half", ("하프", "미디", "중간 기장", "half", "midi")),
+        ("long", ("긴 기장", "롱", "맥시", "long", "maxi")),
+        ("short", ("짧은 기장", "숏", "미니", "short", "mini")),
+    ),
+    "sex": (
+        ("unisex", ("유니섹스", "남녀공용", "공용", "unisex")),
+        ("male", ("남성", "남자", "남성용", "male", "men")),
+        ("female", ("여성", "여자", "여성용", "female", "women")),
+    ),
+    "season": (
+        ("spring", ("봄", "spring")),
+        ("summer", ("여름", "summer")),
+        ("fall", ("가을", "autumn", "fall")),
+        ("winter", ("겨울", "winter")),
+    ),
+    "stretch": (
+        ("no", ("신축성 없는", "늘어나지 않는", "non-stretch", "no stretch")),
+        ("yes", ("신축성", "스판", "스트레치", "stretch")),
+    ),
+    "thickness": (
+        ("thin", ("얇은", "가벼운", "thin", "lightweight")),
+        ("medium", ("중간 두께", "보통 두께", "medium")),
+        ("thick", ("두꺼운", "도톰한", "thick", "heavyweight")),
+    ),
+    "fit": (
+        ("oversized", ("오버사이즈", "오버핏", "oversized", "over fit")),
+        ("wide", ("와이드 핏", "와이드핏", "wide fit", "wide-fit")),
+        ("loose", ("루즈핏", "여유로운", "loose")),
+        ("regular", ("레귤러핏", "정핏", "regular")),
+        ("slim", ("슬림핏", "슬림", "slim")),
+    ),
+}
+
+COLOR_TERMS = (
+    "black", "white", "ivory", "gray", "grey", "charcoal", "navy", "blue",
+    "denim", "brown", "beige", "cream", "red", "pink", "purple", "green",
+    "khaki", "olive", "yellow", "orange", "블랙", "검정", "검은", "화이트",
+    "흰색", "아이보리", "회색", "그레이", "차콜", "네이비", "파랑", "블루",
+    "데님", "브라운", "갈색", "베이지", "크림", "빨강", "레드", "핑크",
+    "보라", "퍼플", "초록", "그린", "카키", "올리브", "노랑", "옐로우",
+    "오렌지",
+)
+FABRIC_TERMS = (
+    "cotton", "linen", "denim", "wool", "polyester", "nylon", "leather",
+    "suede", "corduroy", "knit", "fleece", "jersey", "mesh", "코튼",
+    "면 소재", "면 원단", "순면", "면티", "면 티셔츠", "면 셔츠", "린넨",
+    "데님", "울", "양모", "폴리", "폴리에스터", "나일론", "가죽", "레더",
+    "스웨이드", "코듀로이", "니트", "플리스", "저지", "메쉬",
+)
+DETAIL_DESCRIPTION_TERMS = (
+    "리본", "땡땡이", "도트", "스트라이프", "체크", "프린트", "로고", "패턴",
+    "무지", "플라워", "꽃", "레이스", "프릴", "주름", "플리츠", "자수",
+    "그래픽", "캐릭터", "카라", "후드", "포켓", "주머니", "지퍼", "버튼",
+    "슬릿", "워싱", "데미지", "카고", "stripe", "check", "print", "logo",
+    "pattern", "plain", "floral", "lace", "frill", "pleats", "graphic",
+    "collar", "hood", "pocket", "zip", "button", "slit", "washed",
+    "distressed", "cargo",
+)
+ABSTRACT_TPO_TERMS = (
+    "tpo", "면접", "출근", "회사", "오피스", "비즈니스", "하객", "결혼식",
+    "데이트", "소개팅", "여행", "휴가", "캠핑", "운동", "러닝", "헬스",
+    "등산", "학교", "졸업식", "입학식", "장례식", "파티", "클럽", "격식",
+    "단정", "꾸안꾸", "interview", "office", "business", "wedding",
+    "date", "travel", "workout", "running", "formal", "casual",
+)
+
+VALUE_VARIANTS: dict[str, dict[str, tuple[str, ...]]] = {
+    field: dict(values)
+    for field, values in ATTRIBUTE_PATTERNS.items()
+}
+DB_EXACT_MATCH_VARIANTS = {
+    "sleeve": {
+        "long": ("long",),
+        "short": ("short",),
+        "sleeveless": ("sleeveless",),
+    },
+    "sex": {
+        "male": ("남성",),
+        "female": ("여성",),
+        "unisex": ("남성", "여성"),
+    },
+    "fit": {
+        "slim": ("슬림",),
+        "regular": ("레귤러",),
+        "loose": ("루즈",),
+        "oversized": ("오버사이즈",),
+        "wide": ("루즈", "오버사이즈"),
+    },
+    "stretch": {
+        "no": ("없음", "거의 없음"),
+        "yes": ("있음", "약간 있음"),
+    },
+    "thickness": {
+        "thin": ("얇음", "약간 얇음"),
+        "medium": ("보통",),
+        "thick": ("두꺼움", "약간두꺼움", "약간 두꺼움"),
+    },
+    "season": {
+        "spring": ("봄",),
+        "summer": ("여름",),
+        "fall": ("가을",),
+        "winter": ("겨울",),
+    },
+}
+for field, values in DB_EXACT_MATCH_VARIANTS.items():
+    for value, variants in values.items():
+        VALUE_VARIANTS.setdefault(field, {})[value] = (
+            *VALUE_VARIANTS.get(field, {}).get(value, (value,)),
+            *variants,
+        )
+
+DETAIL_DESCRIPTION_LABELS = {
+    "리본": "ribbon",
+    "땡땡이": "polka dot pattern",
+    "도트": "polka dot pattern",
+    "스트라이프": "striped pattern",
+    "체크": "check pattern",
+    "프린트": "print",
+    "로고": "logo",
+    "패턴": "pattern",
+    "무지": "plain design",
+    "플라워": "floral pattern",
+    "꽃": "floral pattern",
+    "레이스": "lace detail",
+    "프릴": "frill detail",
+    "주름": "pleated detail",
+    "플리츠": "pleated detail",
+    "자수": "embroidered detail",
+    "그래픽": "graphic print",
+    "캐릭터": "character graphic",
+    "카라": "collar",
+    "후드": "hood",
+    "포켓": "pocket",
+    "주머니": "pocket",
+    "지퍼": "zipper",
+    "버튼": "button",
+    "슬릿": "slit",
+    "워싱": "washed finish",
+    "데미지": "distressed detail",
+    "카고": "cargo pocket",
+}
+
+@dataclass(frozen=True)
+class ParsedTextAttributes:
+    sleeve: str | None = None
+    length: str | None = None
+    color: str | None = None
+    category1: str | None = None
+    sex: str | None = None
+    season: str | None = None
+    stretch: str | None = None
+    thickness: str | None = None
+    fit: str | None = None
+    fabric: str | None = None
+
+    def to_dict(self) -> dict[str, str]:
+        return {
+            key: value
+            for key, value in self.__dict__.items()
+            if value is not None
+        }
+
+    def with_missing_from(self, fallback: "ParsedTextAttributes") -> "ParsedTextAttributes":
+        return ParsedTextAttributes(
+            **{
+                field: (
+                    getattr(fallback, field)
+                    if field == "fit" and getattr(fallback, field) == "wide"
+                    else getattr(self, field) or getattr(fallback, field)
+                )
+                for field in self.__dataclass_fields__
+            }
+        )
+
+
+@dataclass(frozen=True)
+class ParallelTextAnalysis:
+    structured_attributes: ParsedTextAttributes
+    detail_terms: str | None
+    detail_target_description: str | None
+    intent_type: str
+    lane_metadata: dict[str, Any]
+
+    @property
+    def parsed_attributes(self) -> ParsedTextAttributes:
+        return self.structured_attributes
+
+
+@dataclass(frozen=True)
+class AttributeTextSearchPlan:
+    parsed_attributes: ParsedTextAttributes
+    has_image: bool
+    table_filter: str | None
+    category2_filter: str | None
+    category2_keyword_filter: str | None
+    prefetch_count: int
+    user_filter_overrides: dict[str, str]
+    intent_type: str
+    analysis_lanes: dict[str, Any]
+    detail_target_description: str | None
+    extraction_metadata: dict[str, Any] | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        exact_fields = [
+            field
+            for field in EXACT_FILTER_FIELDS
+            if getattr(self.parsed_attributes, field) is not None
+        ]
+        semantic_fields = [
+            field
+            for field in SOFT_TEXT_RERANK_FIELDS
+            if getattr(self.parsed_attributes, field) is not None
+        ]
+
+        return {
+            "query_type": "text_image" if self.has_image else "text_only",
+            "id": (
+                "intent_text_image_table_narrowing"
+                if self.has_image
+                else "intent_text_table_narrowing"
+            ),
+            "label": (
+                "보수적 의도 추출 기반 텍스트+이미지 파이프라인"
+                if self.has_image
+                else "보수적 의도 추출 기반 텍스트 파이프라인"
+            ),
+            "baseline": False,
+            "intent_type": self.intent_type,
+            "retrieval_strategy": (
+                "conservative_metadata_narrowing_then_target_description_gemini_embedding_search"
+            ),
+            "parsed_attributes": self.parsed_attributes.to_dict(),
+            "analysis_lanes": self.analysis_lanes,
+            "detail_target_description": self.detail_target_description,
+            "intent_extraction": {
+                "status": (self.extraction_metadata or {}).get("status", INTENT_EXTRACTION_STATUS),
+                "method": (self.extraction_metadata or {}).get("method", "rule_based_keyword_parser"),
+                "prompt_id": (self.extraction_metadata or {}).get("prompt_id"),
+                "prompt": None,
+                "notes": [
+                    "Conservative intent extraction retains only explicitly mentioned attributes.",
+                    "Text+image requests use image evidence only when the query explicitly asks for a visible image attribute.",
+                ],
+            },
+            "exact_filter_fields": exact_fields,
+            "soft_text_rerank_fields": semantic_fields,
+            "applied_filters": {
+                key: value
+                for key, value in {
+                    "table": self.table_filter,
+                    "category2": self.category2_filter,
+                    "category2_keyword": self.category2_keyword_filter,
+                }.items()
+                if value
+            },
+            "user_filter_overrides": self.user_filter_overrides,
+            "prefetch_count": self.prefetch_count,
+            "notes": [
+                "Metadata extraction uses the conservative prompt from the evaluation experiment, with rule-based parsing only as support metadata.",
+                "category1 is used to narrow the Supabase table before vector search only when explicit or conservatively extracted.",
+                "The API fetches a wider candidate set for metadata mode before post-filter/rerank.",
+                "Exact attributes are post-filtered/reranked only when returned by the RPC.",
+                "color and fabric are not separately embedded; they stay as soft text signals.",
+                "Detail terms are handled by the target-description generation path, not as database columns.",
+                "Abstract TPO queries are marked but not hard-filtered unless explicit attributes are present.",
+            ],
+        }
+
+
+def parse_text_attributes(query: str) -> ParsedTextAttributes:
+    return analyze_text_query_in_parallel(query).parsed_attributes
+
+
+def analyze_text_query_in_parallel(query: str) -> ParallelTextAnalysis:
+    normalized = _normalize_query(query)
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        structured_future = executor.submit(_parse_structured_attributes, normalized)
+        detail_future = executor.submit(_parse_detail_description, normalized)
+        structured_attributes = structured_future.result()
+        detail_terms, detail_target_description = detail_future.result()
+
+    intent_type = _detect_intent_type(normalized, structured_attributes)
+    structured_fields = structured_attributes.to_dict()
+    lane_metadata = {
+        "structured_attributes": {
+            "status": "filled" if structured_fields else "empty",
+            "fields": sorted(structured_fields),
+                "implementation": INTENT_EXTRACTION_STATUS,
+            "scope": (
+                "sleeve, length, category1, sex, season, stretch, thickness, "
+                "fit, color, fabric"
+            ),
+        },
+        "detail_target_description": {
+            "status": "filled" if detail_target_description else "empty",
+            "terms": detail_terms,
+            "target_description": detail_target_description,
+            "scope": (
+                "visible details for target-description generation: pattern, logo, "
+                "graphics, trim, pocket, zip, collar, hood, pleats, ribbon, lace"
+            ),
+        },
+        "intent": {
+            "type": intent_type,
+            "tpo_terms_detected": _matched_terms(normalized, ABSTRACT_TPO_TERMS),
+        },
+    }
+
+    return ParallelTextAnalysis(
+        structured_attributes=structured_attributes,
+        detail_terms=detail_terms,
+        detail_target_description=detail_target_description,
+        intent_type=intent_type,
+        lane_metadata=lane_metadata,
+    )
+
+
+def build_attribute_text_search_plan(
+    query: str,
+    top_k: int,
+    has_image: bool = False,
+    extracted_attributes: ParsedTextAttributes | None = None,
+    extraction_metadata: dict[str, Any] | None = None,
+    table_filter: str | None = None,
+    category2_filter: str | None = None,
+    category2_keyword_filter: str | None = None,
+) -> AttributeTextSearchPlan:
+    analysis = analyze_text_query_in_parallel(query)
+    parsed = (
+        extracted_attributes.with_missing_from(analysis.parsed_attributes)
+        if extracted_attributes
+        else analysis.parsed_attributes
+    )
+    rule_category, rule_table, rule_category2_keyword = _parse_category(
+        _normalize_query(query)
+    )
+    category = parsed.category1 or rule_category
+    inferred_table, inferred_category2_keyword = _route_category(category)
+    inferred_table = inferred_table or rule_table
+    inferred_category2_keyword = inferred_category2_keyword or rule_category2_keyword
+    user_overrides = {
+        key: value
+        for key, value in {
+            "table": table_filter,
+            "category2": category2_filter,
+            "category2_keyword": category2_keyword_filter,
+        }.items()
+        if value
+    }
+
+    effective_table = table_filter or inferred_table
+    if effective_table not in VALID_TABLES:
+        effective_table = table_filter
+
+    effective_category2_keyword = (
+        category2_keyword_filter
+        or inferred_category2_keyword
+    )
+    has_parsed_attributes = bool(parsed.to_dict() or category)
+    if has_parsed_attributes:
+        prefetch_count = max(top_k, METADATA_PREFETCH_LIMIT)
+    elif analysis.intent_type == "abstract_tpo" and not effective_table:
+        prefetch_count = top_k
+    else:
+        prefetch_count = top_k
+
+    return AttributeTextSearchPlan(
+        parsed_attributes=parsed,
+        has_image=has_image,
+        table_filter=effective_table,
+        category2_filter=category2_filter,
+        category2_keyword_filter=effective_category2_keyword,
+        prefetch_count=prefetch_count,
+        user_filter_overrides=user_overrides,
+        intent_type=analysis.intent_type,
+        analysis_lanes=analysis.lane_metadata,
+        detail_target_description=analysis.detail_target_description,
+        extraction_metadata=extraction_metadata,
+    )
+
+
+def _route_category(category: str | None) -> tuple[str | None, str | None]:
+    if not category:
+        return None, None
+    table = TABLE_ROUTING_MAP.get(category)
+    if not table:
+        return None, None
+    category2_keyword = None
+    if category == "skirt":
+        category2_keyword = "스커트"
+    elif category in {"one-piece", "dress"}:
+        category2_keyword = "원피스"
+    return table, category2_keyword
+
+
+def get_target_table(category1: str | None) -> str | None:
+    """Compatibility helper for the old retrieval prototype API."""
+    return _route_category((category1 or "").lower())[0]
+
+
+def _normalize_query(text: str) -> str:
+    return f" {unicodedata.normalize('NFC', text.lower())} "
+
+
+def _parse_category(normalized: str) -> tuple[str | None, str | None, str | None]:
+    for category, table, category2_keyword, terms in CATEGORY_RULES:
+        if _contains_any(normalized, terms):
+            return category, table, category2_keyword
+    return None, None, None
+
+
+def _parse_structured_attributes(normalized: str) -> ParsedTextAttributes:
+    values: dict[str, str | None] = {
+        "category1": _parse_category(normalized)[0],
+        "color": _first_term(normalized, COLOR_TERMS),
+        "fabric": _first_term(normalized, FABRIC_TERMS),
+    }
+
+    for field, patterns in ATTRIBUTE_PATTERNS.items():
+        values[field] = _first_pattern_value(normalized, patterns)
+
+    return ParsedTextAttributes(**values)
+
+
+def _parse_detail_description(normalized: str) -> tuple[str | None, str | None]:
+    terms = _matched_terms(normalized, DETAIL_DESCRIPTION_TERMS)
+    display_terms = ", ".join(dict.fromkeys(terms)) or None
+    canonical_terms = ", ".join(
+        dict.fromkeys(DETAIL_DESCRIPTION_LABELS.get(term, term) for term in terms)
+    )
+    target_description = (
+        f"Prioritize visible item details: {canonical_terms}."
+        if canonical_terms
+        else None
+    )
+    return display_terms, target_description
+
+
+def _detect_intent_type(
+    normalized: str,
+    structured_attributes: ParsedTextAttributes,
+) -> str:
+    if not _contains_any(normalized, ABSTRACT_TPO_TERMS):
+        return "attribute"
+    if structured_attributes.category1:
+        return "attribute_with_tpo_context"
+    return "abstract_tpo"
+
+
+def _first_pattern_value(
+    normalized: str,
+    patterns: Iterable[tuple[str, tuple[str, ...]]],
+) -> str | None:
+    for value, terms in patterns:
+        if _contains_any(normalized, terms):
+            return value
+    return None
+
+
+def _first_term(normalized: str, terms: Iterable[str]) -> str | None:
+    for term in terms:
+        if _contains_any(normalized, (term,)):
+            return term
+    return None
+
+
+def _join_terms(normalized: str, terms: Iterable[str]) -> str | None:
+    found = [term for term in terms if _contains_any(normalized, (term,))]
+    return ", ".join(dict.fromkeys(found)) or None
+
+
+def _matched_terms(normalized: str, terms: Iterable[str]) -> list[str]:
+    return [term for term in terms if _contains_any(normalized, (term,))]
+
+
+def _contains_any(normalized: str, terms: Iterable[str]) -> bool:
+    return any(_contains_term(normalized, term) for term in terms)
+
+
+def _contains_term(normalized: str, term: str) -> bool:
+    term = term.lower().strip()
+    if not term:
+        return False
+    if re.search(r"[a-z0-9]", term):
+        return bool(re.search(rf"(?<![a-z0-9]){re.escape(term)}(?![a-z0-9])", normalized))
+    return term in normalized
+
+
+def _row_has_value(row: dict[str, Any], field: str) -> bool:
+    value = row.get(field)
+    return value not in (None, "", [], {})
+
+
+def _row_matches_attribute(row: dict[str, Any], field: str, value: str) -> bool:
+    row_text = _normalize_row_value(row.get(field))
+    if not row_text:
+        return False
+
+    variants = VALUE_VARIANTS.get(field, {}).get(value, (value,))
+    return any(_normalize_row_value(variant) in row_text for variant in variants)
+
+
+def _exact_match_count(row: dict[str, Any], parsed: ParsedTextAttributes) -> int:
+    return sum(
+        1
+        for field in EXACT_FILTER_FIELDS
+        if field != "category1"
+        and getattr(parsed, field) is not None
+        and _row_matches_attribute(row, field, getattr(parsed, field) or "")
+    )
+
+
+def _semantic_match_count(row: dict[str, Any], parsed: ParsedTextAttributes) -> int:
+    count = 0
+    for field in SOFT_TEXT_RERANK_FIELDS:
+        expected = getattr(parsed, field)
+        row_text = _normalize_row_value(row.get(field))
+        if expected and row_text and any(
+            _normalize_row_value(term) in row_text
+            for term in _split_semantic_terms(expected)
+        ):
+            count += 1
+    return count
+
+
+def _split_semantic_terms(value: str) -> list[str]:
+    return [term.strip() for term in value.split(",") if term.strip()]
+
+
+def _normalize_row_value(value: Any) -> str:
+    if isinstance(value, list):
+        value = " ".join(str(item) for item in value)
+    return re.sub(r"\s+", " ", str(value or "").lower()).strip()
+
+
+def refine_attribute_text_results(
+    rows: list[dict[str, Any]],
+    parsed: ParsedTextAttributes,
+    top_k: int,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    exact_fields = [
+        field
+        for field in EXACT_FILTER_FIELDS
+        if field != "category1" and getattr(parsed, field) is not None
+    ]
+    supported_exact_fields = [
+        field for field in exact_fields if any(_row_has_value(row, field) for row in rows)
+    ]
+    unsupported_exact_fields = [
+        field for field in exact_fields if field not in supported_exact_fields
+    ]
+
+    filtered_rows = [
+        row for row in rows
+        if all(
+            _row_matches_attribute(row, field, getattr(parsed, field) or "")
+            for field in supported_exact_fields
+        )
+    ]
+    used_exact_filter = bool(supported_exact_fields and filtered_rows)
+    working_rows = filtered_rows if used_exact_filter else rows
+
+    reranked_rows = sorted(
+        working_rows,
+        key=lambda row: (
+            float(row.get("similarity") or 0)
+            + 0.02 * _exact_match_count(row, parsed)
+            + 0.01 * _semantic_match_count(row, parsed)
+        ),
+        reverse=True,
+    )
+
+    return reranked_rows[:top_k], {
+        "post_filter_status": (
+            "applied"
+            if used_exact_filter
+            else "relaxed_no_exact_matches"
+            if supported_exact_fields
+            else "not_supported_by_rpc_result"
+        ),
+        "supported_exact_fields": supported_exact_fields,
+        "unsupported_exact_fields": unsupported_exact_fields,
+        "soft_text_rerank_fields": [
+            field
+            for field in SOFT_TEXT_RERANK_FIELDS
+            if getattr(parsed, field) is not None
+        ],
+        "input_count": len(rows),
+        "output_count": min(len(reranked_rows), top_k),
+    }
+
+
+# ---------------------------------------------------------------------------
+# SQL-based candidate pre-filtering (Supabase direct query)
+# ---------------------------------------------------------------------------
+
+def translate_to_db_value(key: str, value: Any) -> Any:
+    """영어 속성값을 DB 저장값(한글)으로 변환."""
+    if key not in DB_TRANSLATION_MAP:
+        return value
+    mapping = DB_TRANSLATION_MAP[key]
+    if isinstance(value, list):
+        result = []
+        for v in value:
+            mapped = mapping.get(v, v)
+            result.extend(mapped if isinstance(mapped, list) else [mapped])
+        return list(set(result))
+    mapped = mapping.get(value, value)
+    return mapped
+
+
+def retrieve_candidates(
+    inferred_attributes: dict[str, Any],
+    include_embeddings: bool = False,
+    page_size: int = 100,
+) -> list[dict[str, Any]]:
+    """
+    VLM 추론 결과(속성 dict)를 받아 Supabase SQL 필터링으로 후보군 반환.
+
+    Args:
+        inferred_attributes: {"category1": "top", "sleeve": "long", "color": "blue", ...}
+        include_embeddings: 저장된 Gemini 이미지 임베딩을 응답에 포함할지 여부
+
+    Returns:
+        SQL 필터 조건을 만족하는 상품 리스트
+    """
+    from supabase import create_client
+
+    supabase_url = os.environ.get("SUPABASE_URL", "")
+    supabase_key = os.environ.get("SUPABASE_KEY", "")
+    if not supabase_url or not supabase_key:
+        raise RuntimeError("SUPABASE_URL / SUPABASE_KEY 환경변수가 설정되지 않았습니다.")
+
+    supabase = create_client(supabase_url, supabase_key)
+
+    category1 = (inferred_attributes.get("category1") or "").lower()
+    target_table = TABLE_ROUTING_MAP.get(category1)
+    if not target_table:
+        return []
+
+    select_fields = "*"
+    rows: list[dict[str, Any]] = []
+    offset = 0
+    while True:
+        db_query = supabase.table(target_table).select(select_fields)
+        db_query = _apply_candidate_filters(db_query, inferred_attributes)
+        response = db_query.range(offset, offset + page_size - 1).execute()
+        page = response.data or []
+        normalized_page = [
+            _normalize_candidate_row(row, target_table, supabase_url)
+            for row in page
+        ]
+        if not include_embeddings:
+            for row in normalized_page:
+                row.pop("gemini_image_embedding_768", None)
+                row.pop("gemini_fabric_text_embedding_768", None)
+        rows.extend(normalized_page)
+        if len(page) < page_size:
+            return rows
+        offset += page_size
+
+
+def retrieve_products(inferred_attributes: dict[str, Any]) -> list[dict[str, Any]]:
+    """Compatibility API for /retrieve and the old retrieval prototype.
+
+    Uses env-based Supabase configuration and the current candidate narrowing
+    implementation. Stored Gemini embeddings are not returned for this endpoint.
+    """
+    return retrieve_candidates(inferred_attributes, include_embeddings=False)
+
+
+def _apply_candidate_filters(db_query: Any, inferred_attributes: dict[str, Any]) -> Any:
+    for key, val in inferred_attributes.items():
+        if not val or key in {"category1", "color", "fabric", "visual_detail", "reasoning"}:
+            continue
+
+        translated = translate_to_db_value(key, val)
+        if key in ARRAY_COLUMNS:
+            v_list = translated if isinstance(translated, list) else [translated]
+            if key == "sex" and len(v_list) > 1:
+                db_query = db_query.contains(key, v_list)
+            else:
+                db_query = db_query.overlaps(key, v_list)
+        elif key in TEXT_COLUMNS:
+            if isinstance(translated, list):
+                db_query = db_query.or_(",".join(f"{key}.eq.{v}" for v in translated))
+            else:
+                db_query = db_query.eq(key, translated)
+    return db_query
+
+
+def _normalize_candidate_row(
+    row: dict[str, Any],
+    table: str,
+    supabase_url: str,
+) -> dict[str, Any]:
+    normalized = {**row, "source_table": table}
+    if not normalized.get("image_url"):
+        bucket = {
+            "musinsa_top_clothes": "test",
+            "musinsa_pants": "musinsa_pants",
+            "musinsa_skirt_dress": "skirt_dress",
+        }[table]
+        normalized["image_url"] = (
+            f"{supabase_url.rstrip('/')}/storage/v1/object/public/"
+            f"{bucket}/{normalized['id']}.jpg"
+        )
+    return normalized
+
+
+def filter_candidates_by_metadata(
+    rows: list[dict[str, Any]],
+    parsed: ParsedTextAttributes,
+) -> list[dict[str, Any]]:
+    exact_fields = [
+        field
+        for field in EXACT_FILTER_FIELDS
+        if field != "category1" and getattr(parsed, field) is not None
+    ]
+    if not exact_fields:
+        return rows
+    return [
+        row
+        for row in rows
+        if all(
+            _row_matches_attribute(row, field, getattr(parsed, field) or "")
+            for field in exact_fields
+        )
+    ]
