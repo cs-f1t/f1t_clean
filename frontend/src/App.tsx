@@ -433,7 +433,7 @@ function App() {
   const [selectedProvider, setSelectedProvider] = useState('gemini')
   const [isProviderMenuOpen, setIsProviderMenuOpen] = useState(false)
   const [providerModels, setProviderModels] = useState<ProviderModels>({
-    gemini: 'gemini-2.5-flash',
+    gemini: 'gemini-3.5-flash',
     openai: 'gpt-5.4-nano',
     qwen: 'qwen3.5-0.8B',
   })
