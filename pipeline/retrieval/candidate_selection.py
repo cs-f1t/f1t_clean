@@ -58,6 +58,7 @@ EXACT_FILTER_FIELDS = (
 SOFT_TEXT_RERANK_FIELDS = ()
 INTENT_EXTRACTION_STATUS = "gemini_intent_analysis"
 METADATA_PREFETCH_LIMIT = 1000
+SUPABASE_REST_TIMEOUT_SECONDS = 8
 
 CATEGORY_RULES = (
     ("one-piece", "musinsa_skirt_dress", "원피스", ("원피스", "드레스", "one piece", "one-piece")),
@@ -688,6 +689,7 @@ def retrieve_candidates(
     inferred_attributes: dict[str, Any],
     include_embeddings: bool = False,
     page_size: int = 100,
+    max_rows: int = METADATA_PREFETCH_LIMIT,
 ) -> list[dict[str, Any]]:
     """
     VLM 추론 결과(속성 dict)를 받아 Supabase SQL 필터링으로 후보군 반환.
@@ -699,14 +701,21 @@ def retrieve_candidates(
     Returns:
         SQL 필터 조건을 만족하는 상품 리스트
     """
-    from supabase import create_client
+    from supabase import ClientOptions, create_client
 
     supabase_url = os.environ.get("SUPABASE_URL", "")
     supabase_key = os.environ.get("SUPABASE_KEY", "")
     if not supabase_url or not supabase_key:
         raise RuntimeError("SUPABASE_URL / SUPABASE_KEY 환경변수가 설정되지 않았습니다.")
 
-    supabase = create_client(supabase_url, supabase_key)
+    timeout_seconds = float(
+        os.getenv("SUPABASE_REST_TIMEOUT_SECONDS", str(SUPABASE_REST_TIMEOUT_SECONDS))
+    )
+    supabase = create_client(
+        supabase_url,
+        supabase_key,
+        options=ClientOptions(postgrest_client_timeout=timeout_seconds),
+    )
 
     category1 = (inferred_attributes.get("category1") or "").lower()
     target_table = TABLE_ROUTING_MAP.get(category1)
@@ -717,9 +726,10 @@ def retrieve_candidates(
     rows: list[dict[str, Any]] = []
     offset = 0
     while True:
+        page_end = min(offset + page_size - 1, max_rows - 1)
         db_query = supabase.table(target_table).select(select_fields)
         db_query = _apply_candidate_filters(db_query, inferred_attributes)
-        response = db_query.range(offset, offset + page_size - 1).execute()
+        response = db_query.range(offset, page_end).execute()
         page = response.data or []
         normalized_page = [
             _normalize_candidate_row(row, target_table, supabase_url)
@@ -730,7 +740,7 @@ def retrieve_candidates(
                 row.pop("gemini_image_embedding_768", None)
                 row.pop("gemini_fabric_text_embedding_768", None)
         rows.extend(normalized_page)
-        if len(page) < page_size:
+        if len(page) < page_size or len(rows) >= max_rows:
             return rows
         offset += page_size
 
