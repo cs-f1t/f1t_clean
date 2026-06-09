@@ -736,7 +736,7 @@ function App() {
   )
 
   useEffect(() => {
-    if (baselineSearchResponse || submittedHadImage) {
+    if (baselineSearchResponse || submittedHadImage || submittedQuery) {
       return
     }
 
@@ -904,7 +904,13 @@ function App() {
   }
 
   function handleCategorySelect(categoryId: string) {
+    requestIdRef.current += 1
     setBaselineSearchResponse(null)
+    setSubmittedQuery('')
+    setSubmittedHadImage(false)
+    setErrorMessage('')
+    setProducts([])
+    setTotalProductCount(null)
     setActiveCategoryId(categoryId)
   }
 
@@ -1113,6 +1119,10 @@ function App() {
     setIsSearchCompleteVisible(false)
     setIsUnderstandingRequest(true)
     setSearchProgressIndex(0)
+    setBaselineSearchResponse(null)
+    setProducts([])
+    setTotalProductCount(null)
+    setErrorMessage('')
     const nextRequestId = requestIdRef.current + 1
     const queryText = query.trim()
     const imageFile = selectedImage?.file ?? null
