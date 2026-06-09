@@ -416,7 +416,6 @@ function App() {
   const searchCompleteDelayRef = useRef<number | null>(null)
   const searchCompleteHideDelayRef = useRef<number | null>(null)
   const shouldShowSearchCompleteRef = useRef(false)
-  const baselineSearchResponseRef = useRef<BaselineSearchResponse | null>(null)
   const [activeModal, setActiveModal] = useState<ModalPageId | null>(null)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [activeCategoryId, setActiveCategoryId] = useState('all')
@@ -563,10 +562,6 @@ function App() {
       Boolean(pipelineIntentLabel))
 
   useEffect(() => {
-    baselineSearchResponseRef.current = baselineSearchResponse
-  }, [baselineSearchResponse])
-
-  useEffect(() => {
     fetchProviderModels().then((models) => {
       if (Object.keys(models).length > 0) {
         setProviderModels(models)
@@ -665,7 +660,7 @@ function App() {
           })
         }
 
-        if (requestId === requestIdRef.current && !baselineSearchResponseRef.current) {
+        if (requestId === requestIdRef.current) {
           setTotalProductCount(result.totalCount)
           setProducts((currentProducts) =>
             append ? [...currentProducts, ...result.products] : result.products,
@@ -741,16 +736,11 @@ function App() {
   )
 
   useEffect(() => {
-    if (baselineSearchResponse) {
+    if (baselineSearchResponse || submittedHadImage) {
       return
     }
 
-    const isSubmittedCatalogLoad = Boolean(submittedQuery) || submittedHadImage
-
-    if (!isSubmittedCatalogLoad) {
-      requestIdRef.current += 1
-    }
-
+    requestIdRef.current += 1
     const requestId = requestIdRef.current
 
     const loadTimer = window.setTimeout(() => {
@@ -914,13 +904,7 @@ function App() {
   }
 
   function handleCategorySelect(categoryId: string) {
-    requestIdRef.current += 1
     setBaselineSearchResponse(null)
-    setSubmittedQuery('')
-    setSubmittedHadImage(false)
-    setErrorMessage('')
-    setProducts([])
-    setTotalProductCount(null)
     setActiveCategoryId(categoryId)
   }
 
@@ -1094,6 +1078,8 @@ function App() {
       setSubmittedQuery(queryText)
       setSubmittedHadImage(Boolean(imageFile))
       setBaselineSearchResponse(null)
+      setProducts([])
+      setTotalProductCount(null)
       const message = error instanceof Error ? error.message : ''
       setErrorMessage(
         message && !message.toLowerCase().includes('failed to fetch')
@@ -1127,8 +1113,6 @@ function App() {
     setIsSearchCompleteVisible(false)
     setIsUnderstandingRequest(true)
     setSearchProgressIndex(0)
-    setBaselineSearchResponse(null)
-    setErrorMessage('')
     const nextRequestId = requestIdRef.current + 1
     const queryText = query.trim()
     const imageFile = selectedImage?.file ?? null
@@ -1143,10 +1127,6 @@ function App() {
       setIsUnderstandingRequest(false)
       return
     }
-
-    setSubmittedQuery(queryText)
-    setSubmittedHadImage(Boolean(imageFile))
-    setSearchRunId((currentId) => currentId + 1)
 
     void runSubmittedSearch(queryText, imageFile, nextRequestId)
   }
@@ -1966,7 +1946,7 @@ function App() {
                 </div>
               )}
 
-              {!isBaselineSearch && (isLoading || isUnderstandingRequest) && products.length === 0 && (
+              {!isBaselineSearch && isLoading && products.length === 0 && (
                 <div className="grid grid-cols-5 gap-x-2 gap-y-6 sm:gap-x-3 md:gap-x-4 md:gap-y-8">
                   {Array.from({ length: 20 }).map((_, i) => (
                     <div key={i} className="min-w-0 animate-pulse">
@@ -1981,7 +1961,7 @@ function App() {
                 </div>
               )}
 
-              {!isBaselineSearch && !isLoading && !isUnderstandingRequest && !errorMessage && products.length === 0 && (
+              {!isBaselineSearch && !isLoading && !errorMessage && products.length === 0 && (
                 <div className="rounded-xl border border-slate-200 bg-white px-4 py-10 text-center text-sm text-slate-500">
                   조건에 맞는 상품이 없습니다.
                 </div>
